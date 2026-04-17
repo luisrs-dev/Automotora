@@ -1,0 +1,135 @@
+<!-- Floating chatbot wrapper -->
+<div class="chatbot-wrapper" [class.chatbot-wrapper--open]="isOpen()">
+
+  <!-- ── Chat window ── -->
+  <div class="chat-window" [class.chat-window--visible]="isOpen()" role="dialog" aria-label="Asistente IA JARA">
+
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header__avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="8" width="18" height="12" rx="3"/>
+          <path d="M8 8V6a4 4 0 018 0v2"/>
+          <circle cx="9" cy="13" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="15" cy="13" r="1.2" fill="currentColor" stroke="none"/>
+          <path d="M9 17h6" stroke-linecap="round"/>
+        </svg>
+        <span class="chat-header__status-dot"></span>
+      </div>
+      <div class="chat-header__info">
+        <span class="chat-header__name">JARABot</span>
+        <span class="chat-header__sub">Asistente IA · En línea</span>
+      </div>
+      <!-- Close button -->
+      <button class="chat-header__close" (click)="toggleChat()" aria-label="Cerrar chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chat-messages-list">
+      @for (msg of messages(); track msg.id) {
+        <div class="chat-msg" [class.chat-msg--user]="msg.role === 'user'" [class.chat-msg--agent]="msg.role === 'agent'">
+          @if (msg.role === 'agent') {
+            <div class="chat-msg__avatar-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="8" width="18" height="12" rx="3"/>
+                <path d="M8 8V6a4 4 0 018 0v2"/>
+                <circle cx="9" cy="13" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="15" cy="13" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+          }
+          <div class="chat-msg__bubble">
+            <p>{{ msg.text }}</p>
+            <span class="chat-msg__time">{{ formatTime(msg.timestamp) }}</span>
+          </div>
+        </div>
+      }
+
+      <!-- Typing indicator -->
+      @if (isAgentTyping()) {
+        <div class="chat-msg chat-msg--agent">
+          <div class="chat-msg__avatar-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="8" width="18" height="12" rx="3"/>
+              <path d="M8 8V6a4 4 0 018 0v2"/>
+              <circle cx="9" cy="13" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="15" cy="13" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="chat-msg__bubble chat-msg__bubble--typing">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+      }
+
+      <!-- Auto-scroll anchor -->
+      <div #messagesEnd></div>
+    </div>
+
+    <!-- Input bar -->
+    <div class="chat-input-bar">
+      <input
+        type="text"
+        class="chat-input"
+        placeholder="Escribe tu consulta…"
+        [ngModel]="inputText()"
+        (ngModelChange)="inputText.set($event)"
+        (keydown)="onKeyDown($event)"
+        [disabled]="isAgentTyping()"
+        autocomplete="off"
+        aria-label="Mensaje"
+        id="chatbot-input"
+      />
+      <button
+        class="chat-send-btn"
+        (click)="sendMessage()"
+        [disabled]="!inputText().trim() || isAgentTyping()"
+        aria-label="Enviar mensaje"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── FAB Trigger Button ── -->
+  <button
+    class="chatbot-fab"
+    [class.chatbot-fab--open]="isOpen()"
+    (click)="toggleChat()"
+    aria-label="Abrir asistente IA"
+    id="chatbot-fab-btn"
+  >
+    <!-- Bot icon (idle) -->
+    <span class="chatbot-fab__icon chatbot-fab__icon--bot" [class.chatbot-fab__icon--hidden]="isOpen()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="8" width="18" height="12" rx="3"/>
+        <path d="M8 8V6a4 4 0 018 0v2"/>
+        <circle cx="9" cy="13" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="13" r="1.2" fill="currentColor" stroke="none"/>
+        <path d="M9 17h6" stroke-linecap="round"/>
+        <path d="M12 3v2" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <!-- X icon (when open) -->
+    <span class="chatbot-fab__icon chatbot-fab__icon--close" [class.chatbot-fab__icon--hidden]="!isOpen()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </span>
+
+    <!-- Pulse ring (only when closed) -->
+    @if (!isOpen()) {
+      <span class="chatbot-fab__pulse"></span>
+    }
+  </button>
+
+</div>

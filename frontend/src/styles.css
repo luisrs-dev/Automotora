@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Block: catalog-card */
+  .catalog-card {
+    @apply relative flex flex-col bg-white dark:bg-surface-cardDark rounded-2xl overflow-hidden transition-all duration-500 ease-jara-ease border border-gray-100 dark:border-surface-borderDark;
+    @apply shadow-float dark:shadow-float-dark hover:-translate-y-2 hover:shadow-float-hover cursor-pointer;
+  }
+  
+  /* Element: catalog-card__image-wrapper */
+  .catalog-card__image-wrapper {
+    @apply relative w-full h-64 overflow-hidden bg-gray-200 dark:bg-gray-800;
+  }
+  
+  /* Element: catalog-card__img */
+  .catalog-card__img {
+    @apply object-cover w-full h-full transition-transform duration-700 ease-jara-ease group-hover:scale-105;
+  }
+  
+  /* Element: catalog-card__badge */
+  .catalog-card__badge {
+    @apply absolute top-4 right-4 bg-jara-accent text-white font-display text-xs font-bold px-3 py-1 rounded-full shadow-lg backdrop-blur-sm z-10;
+  }
+
+  /* Element: catalog-card__content */
+  .catalog-card__content {
+    @apply p-6 flex flex-col flex-grow;
+  }
+
+  /* Element: catalog-card__title */
+  .catalog-card__title {
+    @apply font-display text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-jara-accent transition-colors;
+  }
+  
+  /* Element: catalog-card__specs */
+  .catalog-card__specs {
+    @apply flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-surface-borderDark;
+  }
+  
+  /* Element: catalog-card__spec-item */
+  .catalog-card__spec-item {
+    @apply text-sm text-gray-500 dark:text-gray-400 font-medium flex items-center gap-1;
+  }
+
+  /* Block: btn-primary */
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-jara-accent hover:bg-jara-accent-700 text-white font-display font-medium px-6 py-3 rounded-xl transition-colors duration-300 transform active:scale-95;
+  }
+  
+  /* Glassmorphism Navigation */
+  .nav-glass {
+    @apply bg-white/70 dark:bg-surface-dark/70 backdrop-blur-md border-b border-gray-200/50 dark:border-surface-borderDark/50 sticky top-0 z-50;
+  }
+}
+
+body {
+  @apply bg-surface-light dark:bg-surface-dark text-gray-800 dark:text-gray-200 antialiased transition-colors duration-300;
+}

@@ -1,0 +1,412 @@
+<!-- Hero Slider -->
+<app-hero-slider></app-hero-slider>
+
+<!-- ════════════════════════════════════════════
+     CATALOG SECTION
+     ════════════════════════════════════════════ -->
+<section id="catalogo" class="py-20 bg-gray-50/50 dark:bg-black/20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="flex flex-col lg:flex-row gap-10">
+
+      <!-- ── DESKTOP Sidebar Filters (hidden on mobile) ── -->
+      <aside
+        class="hidden lg:block w-full lg:w-1/4 h-fit sticky top-28 bg-white dark:bg-surface-cardDark p-6 rounded-2xl shadow-float dark:shadow-float-dark border border-gray-100 dark:border-surface-borderDark">
+        <h3 class="font-display font-bold text-xl text-jara-primary dark:text-white mb-6">Filtros Avanzados</h3>
+        <div class="space-y-6">
+          <!-- Filtro Marca -->
+          <ng-container *ngTemplateOutlet="filterControls"></ng-container>
+        </div>
+      </aside>
+
+      <!-- ── Results Grid ── -->
+      <main class="w-full lg:w-3/4">
+
+        <!-- Mobile: top bar with filter trigger -->
+        <div class="flex justify-between items-center mb-6 lg:mb-0">
+          <div>
+            <h2 class="text-2xl lg:text-3xl font-display font-bold text-jara-primary dark:text-white">Catálogo Premium</h2>
+            <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+              Mostrando <strong class="text-jara-accent">{{ store.filteredVehicles().length }}</strong> vehículos.
+            </p>
+          </div>
+
+          <!-- Mobile filter trigger button -->
+          <button
+            class="filter-trigger lg:hidden"
+            (click)="openFilterSheet()"
+            id="mobile-filter-btn"
+            aria-label="Abrir filtros"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M7 12h10M10 20h4"/>
+            </svg>
+            Filtros
+            @if (activeFilterCount() > 0) {
+              <span class="filter-trigger__badge">{{ activeFilterCount() }}</span>
+            }
+          </button>
+        </div>
+
+        @if (store.filteredVehicles().length === 0) {
+        <div class="bg-white dark:bg-surface-cardDark p-10 rounded-2xl text-center border border-gray-100 dark:border-surface-borderDark mt-6">
+          <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+            </path>
+          </svg>
+          <h3 class="text-xl font-display font-bold text-gray-900 dark:text-white">Sin stock disponible</h3>
+          <p class="text-gray-500 mt-2">No hay vehículos que coincidan con estos filtros.</p>
+          <button (click)="clearFilters()" class="mt-6 text-jara-accent hover:underline font-medium">
+            Limpiar Filtros
+          </button>
+        </div>
+        } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 lg:mt-0">
+          @for (veh of store.filteredVehicles(); track veh.id) {
+          <app-vehicle-card [vehicle]="veh"></app-vehicle-card>
+          }
+        </div>
+        }
+      </main>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECCIÓN 1 — SOLUCIONES FINANCIERAS
+     ════════════════════════════════════════════════════════════ -->
+<section class="relative overflow-hidden py-24 lg:py-32" aria-labelledby="financing-title">
+  <!-- Background image with navy overlay -->
+  <div
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style="background-image: url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1600&q=80&auto=format&fit=crop')"
+  ></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-jara-primary/95 via-jara-primary/85 to-jara-primary/60"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <!-- Label -->
+      <span class="inline-flex items-center gap-2 text-jara-accent text-xs font-bold tracking-widest uppercase mb-4">
+        <span class="w-8 h-px bg-jara-accent"></span>Financiamiento
+      </span>
+
+      <h2 id="financing-title" class="text-4xl md:text-5xl font-display font-extrabold text-white leading-tight mb-10">
+        Soluciones financieras<br/>a tu medida
+      </h2>
+
+      <!-- Cards -->
+      <div class="space-y-4 mb-10">
+
+        <!-- Crédito Tradicional -->
+        <div class="flex items-start gap-5 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:bg-white/15 transition-colors group">
+          <div class="w-14 h-14 flex-shrink-0 rounded-xl bg-jara-accent flex items-center justify-center shadow-lg">
+            <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-white text-base mb-1 tracking-wide uppercase">Crédito Tradicional</h3>
+            <p class="text-white/75 text-sm leading-relaxed">Crédito conveniente con <strong class="text-white">hasta 60 meses</strong> de plazo. Tasas competitivas adaptadas a tu perfil.</p>
+          </div>
+        </div>
+
+        <!-- Crédito Express -->
+        <div class="flex items-start gap-5 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:bg-white/15 transition-colors group">
+          <div class="w-14 h-14 flex-shrink-0 rounded-xl bg-jara-accent flex items-center justify-center shadow-lg">
+            <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-white text-base mb-1 tracking-wide uppercase">Crédito Express</h3>
+            <p class="text-white/75 text-sm leading-relaxed">Aprobación <strong class="text-white">casi inmediata</strong>, sólo presentando carnet de identidad.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <a href="#catalogo"
+         class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm text-jara-primary bg-white hover:bg-jara-accent hover:text-white transition-all duration-300 shadow-lg">
+        Ver más
+        <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECCIÓN 2 — NUESTRAS ALIANZAS
+     ════════════════════════════════════════════════════════════ -->
+<section class="py-16 bg-white dark:bg-surface-dark border-y border-gray-100 dark:border-white/5" aria-labelledby="alianzas-title">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
+    <span class="inline-flex items-center gap-3 text-jara-accent text-xs font-bold tracking-widest uppercase">
+      <span class="w-8 h-px bg-jara-accent"></span>
+      <h2 id="alianzas-title">Nuestras Alianzas</h2>
+      <span class="w-8 h-px bg-jara-accent"></span>
+    </span>
+    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">Trabajamos con las mejores instituciones financieras del país</p>
+  </div>
+
+  <!-- Logo strip with infinite scroll animation -->
+  <div class="partners-track-wrapper" aria-label="Partners financieros">
+    <div class="partners-track">
+      <!-- Set 1 -->
+      <div class="partner-logo">
+        <span class="partner-logo__name" style="color:#1B2D6B">Mundo<span style="color:#3B96C8">Crédito</span></span>
+        <span class="partner-logo__sub">Crédito Automotriz</span>
+      </div>
+      <div class="partner-logo">
+        <span class="partner-logo__name" style="color:#EC0000">Santander</span>
+      </div>
+      <div class="partner-logo">
+        <span class="partner-logo__name" style="color:#006633">Banco<br/><span style="color:#009933">Falabella</span></span>
+      </div>
+      <div class="partner-logo">
+        <span class="partner-logo__name" style="color:#1B2D6B">AUTO<span style="color:#3B96C8">FIN</span></span>
+      </div>
+      <div class="partner-logo">
+        <span class="partner-logo__name" style="color:#003087">BancoEstado</span>
+      </div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="partner-logo" aria-hidden="true">
+        <span class="partner-logo__name" style="color:#1B2D6B">Mundo<span style="color:#3B96C8">Crédito</span></span>
+        <span class="partner-logo__sub">Crédito Automotriz</span>
+      </div>
+      <div class="partner-logo" aria-hidden="true">
+        <span class="partner-logo__name" style="color:#EC0000">Santander</span>
+      </div>
+      <div class="partner-logo" aria-hidden="true">
+        <span class="partner-logo__name" style="color:#006633">Banco<br/><span style="color:#009933">Falabella</span></span>
+      </div>
+      <div class="partner-logo" aria-hidden="true">
+        <span class="partner-logo__name" style="color:#1B2D6B">AUTO<span style="color:#3B96C8">FIN</span></span>
+      </div>
+      <div class="partner-logo" aria-hidden="true">
+        <span class="partner-logo__name" style="color:#003087">BancoEstado</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECCIÓN 3 — TRES PROPUESTAS DE VALOR
+     ════════════════════════════════════════════════════════════ -->
+<section class="py-20 bg-gray-50 dark:bg-black/20" aria-labelledby="propuestas-title">
+  <h2 id="propuestas-title" class="sr-only">Propuestas de valor</h2>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-3xl overflow-hidden shadow-2xl">
+
+      <!-- Card 1: Imagen fondo (Soluciones financieras) -->
+      <article class="value-card group" style="background-image: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80&auto=format&fit=crop')">
+        <div class="value-card__overlay" style="background: linear-gradient(to top, rgba(11,18,48,0.92) 40%, rgba(11,18,48,0.4) 100%)"></div>
+        <div class="value-card__content">
+          <h3 class="value-card__title">Soluciones Financieras a tu Medida</h3>
+          <p class="value-card__desc">Automotora José Luis Jara cuenta con las mejores alternativas para financiar tu vehículo, de acuerdo a cada necesidad.</p>
+          <a href="#" class="value-card__cta">Ver más</a>
+        </div>
+      </article>
+
+      <!-- Card 2: Fondo marino (Elige tu usado) -->
+      <article class="value-card group" style="background: linear-gradient(135deg, #0d1733 0%, #1B2D6B 100%)">
+        <div class="value-card__content">
+          <h3 class="value-card__title">Elige tu Usado y Seminuevo de Selección</h3>
+          <p class="value-card__desc">Ven a visitarnos y encuentra el vehículo que siempre soñaste. Stock renovado cada semana.</p>
+          <a href="#catalogo" class="value-card__cta">Ver más</a>
+        </div>
+      </article>
+
+      <!-- Card 3: Azul acero (Parte de pago) -->
+      <article class="value-card group" style="background: linear-gradient(135deg, #1a4a6b 0%, #3B96C8 100%)">
+        <div class="value-card__content">
+          <h3 class="value-card__title">Recibimos tu Auto en Parte de Pago</h3>
+          <p class="value-card__desc">Ahorra tiempo en el proceso de venta. Recibimos tu automóvil en parte de pago para abonar en tu próximo vehículo.</p>
+          <a href="#" class="value-card__cta value-card__cta--dark">Ver más</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     MOBILE BOTTOM SHEET + BACKDROP
+     ════════════════════════════════════════════ -->
+
+<!-- Backdrop -->
+<div
+  class="sheet-backdrop"
+  [class.sheet-backdrop--visible]="isFilterSheetOpen()"
+  (click)="closeFilterSheet()"
+  aria-hidden="true"
+></div>
+
+<!-- Bottom Sheet -->
+<div
+  class="filter-sheet"
+  [class.filter-sheet--open]="isFilterSheetOpen()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Filtros de búsqueda"
+>
+  <!-- Drag handle -->
+  <div class="sheet-handle"></div>
+
+  <!-- Sheet header -->
+  <div class="sheet-header">
+    <h3 class="sheet-title">Filtros Avanzados</h3>
+    <div class="flex items-center gap-3">
+      @if (activeFilterCount() > 0) {
+        <button class="sheet-clear-btn" (click)="clearFilters()">
+          Limpiar ({{ activeFilterCount() }})
+        </button>
+      }
+      <button class="sheet-close-btn" (click)="closeFilterSheet()" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter controls inside sheet -->
+  <div class="sheet-body">
+    <ng-container *ngTemplateOutlet="filterControls"></ng-container>
+  </div>
+
+  <!-- Apply button -->
+  <div class="sheet-footer">
+    <button class="sheet-apply-btn" (click)="closeFilterSheet()">
+      Ver {{ store.filteredVehicles().length }} Resultado{{ store.filteredVehicles().length !== 1 ? 's' : '' }}
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     FILTER CONTROLS TEMPLATE (shared by sidebar + sheet)
+     ════════════════════════════════════════════ -->
+<ng-template #filterControls>
+  <div class="space-y-6">
+
+    <!-- Filtro Marca -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Marca</label>
+      <select
+        [ngModel]="store.filterBrand()"
+        (ngModelChange)="store.changeBrand($event)"
+        class="w-full bg-surface-light dark:bg-surface-dark border-transparent focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-lg p-3 text-sm dark:text-gray-200 transition-colors">
+        @for (brand of store.uniqueBrands(); track brand) {
+          <option [value]="brand">{{ brand }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Filtro Modelo (dependiente de marca) -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Modelo
+        @if (store.filterBrand() === 'Todas') {
+          <span class="ml-1 text-xs text-gray-400 font-normal">(selecciona marca primero)</span>
+        }
+      </label>
+      <select
+        [ngModel]="store.filterModel()"
+        (ngModelChange)="store.filterModel.set($event)"
+        [disabled]="store.filterBrand() === 'Todas'"
+        class="w-full bg-surface-light dark:bg-surface-dark border-transparent focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-lg p-3 text-sm dark:text-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+        @for (model of store.uniqueModelsForBrand(); track model) {
+          <option [value]="model">{{ model }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Filtro Año -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Año</label>
+      <select
+        [ngModel]="store.filterYear()"
+        (ngModelChange)="store.filterYear.set(+$event)"
+        class="w-full bg-surface-light dark:bg-surface-dark border-transparent focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-lg p-3 text-sm dark:text-gray-200 transition-colors">
+        @for (year of store.uniqueYears(); track year) {
+          <option [value]="year">{{ year === 0 ? 'Todos los años' : year }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Filtro Tipo de Carrocería -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tipo de Carrocería</label>
+      <select [ngModel]="store.filterBodyType()" (ngModelChange)="store.filterBodyType.set($event)"
+        class="w-full bg-surface-light dark:bg-surface-dark border-transparent focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-lg p-3 text-sm dark:text-gray-200 transition-colors">
+        @for (type of store.uniqueBodyTypes(); track type) {
+          <option [value]="type">{{ type }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Filtro Precio Rango -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Rango de Precio</label>
+
+      <div class="flex justify-between items-center mb-3">
+        <span class="text-xs font-semibold text-jara-accent bg-jara-accent/10 px-2 py-1 rounded-md">
+          {{ store.filterMinPrice() | currency:'USD':'symbol':'1.0-0' }}
+        </span>
+        <span class="text-xs text-gray-400 dark:text-gray-500">—</span>
+        <span class="text-xs font-semibold text-jara-accent bg-jara-accent/10 px-2 py-1 rounded-md">
+          {{ store.filterMaxPrice() | currency:'USD':'symbol':'1.0-0' }}
+        </span>
+      </div>
+
+      <!-- Slider Mínimo -->
+      <div class="space-y-1 mb-4">
+        <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500">
+          <span>Mínimo</span><span>$0 — $240k</span>
+        </div>
+        <input type="range" min="0" max="240000" step="5000"
+          [ngModel]="store.filterMinPrice()"
+          (ngModelChange)="store.filterMinPrice.set(+$event < store.filterMaxPrice() ? +$event : store.filterMaxPrice() - 5000)"
+          class="w-full accent-jara-accent">
+      </div>
+
+      <!-- Slider Máximo -->
+      <div class="space-y-1">
+        <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500">
+          <span>Máximo</span><span>$5k — $250k</span>
+        </div>
+        <input type="range" min="5000" max="250000" step="5000"
+          [ngModel]="store.filterMaxPrice()"
+          (ngModelChange)="store.filterMaxPrice.set(+$event > store.filterMinPrice() ? +$event : store.filterMinPrice() + 5000)"
+          class="w-full accent-jara-accent">
+      </div>
+    </div>
+
+    <!-- ── Limpiar Filtros ── -->
+    @if (activeFilterCount() > 0) {
+      <div class="pt-2 border-t border-gray-100 dark:border-white/10">
+        <button
+          (click)="clearFilters()"
+          class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold
+                 text-red-500 dark:text-red-400
+                 bg-red-50 dark:bg-red-500/10
+                 hover:bg-red-100 dark:hover:bg-red-500/20
+                 border border-red-200 dark:border-red-500/20
+                 transition-all duration-200 active:scale-95"
+          aria-label="Limpiar todos los filtros"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+          Limpiar filtros
+          <span class="ml-auto text-xs font-bold bg-red-100 dark:bg-red-500/20 text-red-500 dark:text-red-400 px-2 py-0.5 rounded-full">
+            {{ activeFilterCount() }}
+          </span>
+        </button>
+      </div>
+    }
+
+  </div>
+</ng-template>

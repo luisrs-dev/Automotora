@@ -1,0 +1,114 @@
+<!-- Header -->
+<header class="nav-glass">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex-shrink-0 flex items-center cursor-pointer">
+        <span class="font-display font-bold text-2xl tracking-tighter text-jara-primary dark:text-white">
+          <span class="text-jara-accent">JARA</span> Motors
+        </span>
+      </div>
+      
+      <div class="flex items-center gap-6">
+        <nav class="hidden md:flex gap-6 font-medium text-sm">
+          <a href="#" class="text-jara-primary dark:text-white hover:text-jara-accent transition-colors">Catálogo</a>
+          <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-jara-accent transition-colors">Nosotros</a>
+          <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-jara-accent transition-colors">Contacto</a>
+        </nav>
+        
+        <div class="h-6 w-px bg-gray-300 dark:bg-gray-700"></div>
+
+        <button (click)="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-500 dark:text-gray-400 focus:outline-none" aria-label="Toggle Dark Mode">
+          @if (isDarkTheme()) {
+            <!-- Sun icon -->
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.336a1 1 0 011.415 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-1.336 4.22a1 1 0 010 1.415l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.415 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-1.336a1 1 0 01-1.415 0l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 010 1.415zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm1.336-4.22a1 1 0 010-1.415l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.415 0zM10 5a5 5 0 100 10 5 5 0 000-10z"></path>
+            </svg>
+          } @else {
+            <!-- Moon icon -->
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="relative pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-jara-accent/5 rounded-full blur-3xl -z-10"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <h1 class="text-4xl md:text-6xl font-display font-extrabold text-jara-primary dark:text-white tracking-tight mb-6">
+      Exclusividad y Potencia<br/>en cada Detalle.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg md:text-xl text-gray-500 dark:text-gray-400 mx-auto mb-10">
+      Descubre nuestro catálogo de vehículos de alta gama seleccionados rigurosamente. Agenda tu visita interactiva hoy mismo.
+    </p>
+    <div class="flex justify-center gap-4">
+      <a href="#catalogo" class="btn-primary">
+        Ver Catálogo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Catalog Section -->
+<section id="catalogo" class="py-20 bg-gray-50/50 dark:bg-black/20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-end mb-12">
+      <div>
+        <h2 class="text-3xl font-display font-bold text-jara-primary dark:text-white">Vehículos Disponibles</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-2">Novedades de la semana listas para entrega.</p>
+      </div>
+    </div>
+
+    <!-- Grid layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- CARD 1 -->
+      <article class="catalog-card group">
+        <div class="catalog-card__image-wrapper">
+          <span class="catalog-card__badge">Nuevo Ingreso</span>
+          <img src="https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&q=80&w=1200" alt="Porsche 911" class="catalog-card__img">
+          <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <span class="text-sm font-medium opacity-80">Precio Lista</span>
+            <div class="font-display font-bold text-2xl">$120,500 <span class="text-sm font-normal">USD</span></div>
+          </div>
+        </div>
+        <div class="catalog-card__content">
+          <p class="text-sm text-jara-accent font-semibold mb-1 uppercase tracking-wider">Porsche</p>
+          <h3 class="catalog-card__title">911 Carrera S</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-2">
+            Un verdadero ícono del diseño y la potencia. Modelo año 2023 en estado inmaculado.
+          </p>
+          
+          <div class="catalog-card__specs">
+            <div class="catalog-card__spec-item">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              2023
+            </div>
+            <div class="catalog-card__spec-item">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              Automático
+            </div>
+            <div class="catalog-card__spec-item">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+              12k km
+            </div>
+          </div>
+          
+          <button class="w-full mt-6 bg-gray-100 hover:bg-jara-primary hover:text-white dark:bg-gray-800 dark:hover:bg-jara-accent dark:text-gray-300 dark:hover:text-white transition-colors duration-300 py-3 rounded-lg font-medium text-sm flex justify-center items-center gap-2 group/btn">
+            Consultar por WhatsApp
+            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<router-outlet></router-outlet>

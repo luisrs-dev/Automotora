@@ -1,0 +1,38 @@
+<header class="nav-glass">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex-shrink-0 flex items-center cursor-pointer" routerLink="/">
+        <img
+          src="/logo-joseluisjara.png"
+          alt="Automotora José Luis Jara"
+          class="h-12 w-auto object-contain"
+          loading="eager"
+        />
+      </div>
+      
+      <div class="flex items-center gap-6">
+        <nav class="hidden md:flex gap-6 font-medium text-sm">
+          <a routerLink="/" class="text-jara-primary dark:text-white hover:text-jara-accent transition-colors">Catálogo</a>
+          <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-jara-accent transition-colors">Nosotros</a>
+          <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-jara-accent transition-colors">Contacto</a>
+        </nav>
+        
+        <div class="h-6 w-px bg-gray-300 dark:bg-gray-700"></div>
+
+        <button (click)="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-500 dark:text-gray-400 focus:outline-none" aria-label="Toggle Dark Mode">
+          @if (isDarkTheme()) {
+            <!-- Sun icon -->
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.336a1 1 0 011.415 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-1.336 4.22a1 1 0 010 1.415l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.415 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-1.336a1 1 0 01-1.415 0l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 010 1.415zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm1.336-4.22a1 1 0 010-1.415l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.415 0zM10 5a5 5 0 100 10 5 5 0 000-10z"></path>
+            </svg>
+          } @else {
+            <!-- Moon icon -->
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

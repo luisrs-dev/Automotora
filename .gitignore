@@ -1,0 +1,13 @@
+# Node & Apps
+**/node_modules/
+**/dist/
+**/.angular/cache/
+
+# Secretos y Configuración
+**/.env
+**/.vscode/
+.DS_Store
+
+# Logs
+*.log
+
