@@ -1,5 +1,5 @@
 <article class="catalog-card group">
-  <div class="catalog-card__image-wrapper cursor-pointer" [routerLink]="['/vehiculo', vehicle.id]">
+  <div class="catalog-card__image-wrapper cursor-pointer" [routerLink]="['/joseluisjara/vehiculo', vehicle.id]">
     @if (vehicle.status === 'Reservado') {
       <span class="catalog-card__badge" style="background:#192A56; opacity: 0.9;">Reservado</span>
     } @else if (vehicle.isNewArrival) {
@@ -26,7 +26,7 @@
     <p class="text-sm text-jara-accent font-semibold mb-1 uppercase tracking-wider">{{vehicle.brand}}</p>
     <h3 class="catalog-card__title cursor-pointer hover:text-jara-accent transition-colors" 
         [class.text-gray-500]="vehicle.status === 'Reservado'"
-        [routerLink]="['/vehiculo', vehicle.id]">
+        [routerLink]="['/joseluisjara/vehiculo', vehicle.id]">
       {{vehicle.model}}
     </h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-2">

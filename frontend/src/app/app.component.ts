@@ -10,10 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterOutlet, NavbarComponent, AiChatbotComponent, FooterComponent],
   template: `
-    <app-navbar></app-navbar>
     <router-outlet></router-outlet>
-    <app-footer></app-footer>
-    <app-ai-chatbot></app-ai-chatbot>
   `
 })
 export class AppComponent {
