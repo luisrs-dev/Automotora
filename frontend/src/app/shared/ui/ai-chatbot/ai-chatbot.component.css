@@ -16,6 +16,8 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 1rem;
+  /* Prevent the wrapper container from blocking clicks behind it */
+  pointer-events: none;
 }
 
 /* ── FAB Button ── */
@@ -36,6 +38,8 @@
               box-shadow 0.3s ease,
               background 0.3s ease;
   flex-shrink: 0;
+  /* Restore clicks for the button */
+  pointer-events: auto;
 }
 .chatbot-fab:hover {
   transform: scale(1.1);
