@@ -1,4 +1,5 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Vehicle } from '../../shared/interfaces/vehicle.interface';
 
 @Injectable({
@@ -56,7 +57,64 @@ export class InventoryService {
   ];
 
   // ── STATE: Filtros activos ──────────────────────────────────
-  private vehiclesSignal = signal<Vehicle[]>(this.initialVehicles);
+  private vehiclesSignal = signal<Vehicle[]>([]);
+
+  private http = inject(HttpClient);
+
+  constructor() {
+    this.loadVehicles();
+  }
+
+  private loadVehicles() {
+    this.http.get<any>('http://127.0.0.1:8055/items/Auto?fields=*,marca.*,modelo.*').subscribe({
+      next: (res) => {
+        console.log('res', res);
+        
+        if (res && res.data) {
+          const apiVehicles: Vehicle[] = res.data.map((item: any) => this.mapApiToVehicle(item));
+          this.vehiclesSignal.set(apiVehicles);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching vehicles from API:', err);
+        // Fallback to mock data if API fails
+        this.vehiclesSignal.set(this.initialVehicles);
+      }
+    });
+  }
+
+  private mapApiToVehicle(item: any): Vehicle {
+    const parts = (item.Titulo || '').split(' ');
+    const derivedBrand = parts.length > 0 ? parts[0] : 'Desconocida';
+    const brand = item.marca?.Nombre || derivedBrand;
+    // Si la marca viene del objeto, la usamos; el modelo será el resto del título
+    // para evitar repetir la marca si el título empieza con ella.
+    const derivedModel = parts.length > 1 ? parts.slice(1).join(' ') : (item.Titulo || 'Desconocido');
+    const model = item.modelo?.Nombre || derivedModel;
+
+    let transmission: 'Manual' | 'Automático' = 'Manual';
+    if (item.Transmision && item.Transmision.toLowerCase().includes('auto')) transmission = 'Automático';
+
+    let status: 'Disponible' | 'Reservado' | 'Vendido' = 'Disponible';
+    if (item.status === 'archived') status = 'Vendido';
+    if (item.status === 'draft') status = 'Reservado';
+
+    return {
+      id: String(item.id),
+      brand,
+      model,
+      year: item.Anio || 2000,
+      price: item.Precio || 0,
+      priceCurrency: 'CLP',
+      status: status,
+      bodyType: 'Sedan', 
+      mileage: item.Kilometraje || 0,
+      transmission,
+      fuel: 'Gasolina', // Default fallback
+      imageUrl: 'https://images.unsplash.com/photo-1623232973601-a9903518f270?auto=format&fit=crop&q=80&w=1200', 
+      description: item.Titulo || 'Sin descripción',
+    };
+  }
 
   /**
    * Obtiene un vehículo por su ID
@@ -70,7 +128,7 @@ export class InventoryService {
   filterBodyType = signal<string>('Todos');
   filterYear     = signal<number>(0);        // 0 = todos los años
   filterMinPrice = signal<number>(0);
-  filterMaxPrice = signal<number>(250000);
+  filterMaxPrice = signal<number>(50000000);
 
   // ── COMPUTED: Vehículos filtrados ──────────────────────────
   filteredVehicles = computed(() => {

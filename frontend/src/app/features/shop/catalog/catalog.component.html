@@ -353,33 +353,33 @@
 
       <div class="flex justify-between items-center mb-3">
         <span class="text-xs font-semibold text-jara-accent bg-jara-accent/10 px-2 py-1 rounded-md">
-          {{ store.filterMinPrice() | currency:'USD':'symbol':'1.0-0' }}
+          {{ store.filterMinPrice() | currency:'CLP':'symbol-narrow':'1.0-0' }}
         </span>
         <span class="text-xs text-gray-400 dark:text-gray-500">—</span>
         <span class="text-xs font-semibold text-jara-accent bg-jara-accent/10 px-2 py-1 rounded-md">
-          {{ store.filterMaxPrice() | currency:'USD':'symbol':'1.0-0' }}
+          {{ store.filterMaxPrice() | currency:'CLP':'symbol-narrow':'1.0-0' }}
         </span>
       </div>
 
       <!-- Slider Mínimo -->
       <div class="space-y-1 mb-4">
         <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500">
-          <span>Mínimo</span><span>$0 — $240k</span>
+          <span>Mínimo</span><span>$0 — $49M</span>
         </div>
-        <input type="range" min="0" max="240000" step="5000"
+        <input type="range" min="0" max="49000000" step="500000"
           [ngModel]="store.filterMinPrice()"
-          (ngModelChange)="store.filterMinPrice.set(+$event < store.filterMaxPrice() ? +$event : store.filterMaxPrice() - 5000)"
+          (ngModelChange)="store.filterMinPrice.set(+$event < store.filterMaxPrice() ? +$event : store.filterMaxPrice() - 500000)"
           class="w-full accent-jara-accent">
       </div>
 
       <!-- Slider Máximo -->
       <div class="space-y-1">
         <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500">
-          <span>Máximo</span><span>$5k — $250k</span>
+          <span>Máximo</span><span>$1M — Max</span>
         </div>
-        <input type="range" min="5000" max="250000" step="5000"
+        <input type="range" min="1000000" max="50000000" step="500000"
           [ngModel]="store.filterMaxPrice()"
-          (ngModelChange)="store.filterMaxPrice.set(+$event > store.filterMinPrice() ? +$event : store.filterMinPrice() + 5000)"
+          (ngModelChange)="store.filterMaxPrice.set(+$event > store.filterMinPrice() ? +$event : store.filterMinPrice() + 500000)"
           class="w-full accent-jara-accent">
       </div>
     </div>

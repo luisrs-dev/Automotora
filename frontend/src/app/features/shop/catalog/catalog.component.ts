@@ -28,7 +28,7 @@ export class CatalogComponent {
     if (this.store.filterBodyType() !== 'Todos')   count++;
     if (this.store.filterYear()     !== 0)         count++;
     if (this.store.filterMinPrice() > 0)           count++;
-    if (this.store.filterMaxPrice() < 250000)      count++;
+    if (this.store.filterMaxPrice() < 50000000)    count++;
     return count;
   });
 
@@ -52,6 +52,6 @@ export class CatalogComponent {
     this.store.filterBodyType.set('Todos');
     this.store.filterYear.set(0);
     this.store.filterMinPrice.set(0);
-    this.store.filterMaxPrice.set(250000);
+    this.store.filterMaxPrice.set(50000000);
   }
 }
