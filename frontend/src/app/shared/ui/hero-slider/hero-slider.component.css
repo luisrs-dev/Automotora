@@ -80,7 +80,6 @@
   margin: 0 auto;
   padding: 0 2rem;
   padding-bottom: 6rem;
-  max-width: min(680px, 90vw);
 }
 
 /* ── Entrance animations triggered by --active ── */
@@ -150,7 +149,7 @@
   color: #ffffff;
   text-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
   margin-bottom: 1.25rem;
-  max-width: 700px;
+  max-width: 850px;
   letter-spacing: -0.02em;
 }
 

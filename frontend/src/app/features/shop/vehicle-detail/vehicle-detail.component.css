@@ -28,8 +28,12 @@
 
 .sticky-card {
   @apply bg-white dark:bg-surface-cardDark rounded-[2rem] shadow-float dark:shadow-float-dark border border-gray-100 dark:border-surface-borderDark overflow-hidden;
+}
+
+.sidebar-sticky-wrapper {
   position: sticky;
   top: 100px;
+  z-index: 10;
 }
 
 .spec-row {
@@ -59,5 +63,67 @@
   .sticky-card {
     position: relative;
     top: 0;
+  }
+}
+
+.vehicle-detail-page {
+  padding-top: 2rem;
+}
+
+/* ── PRINT STYLES (PDF Technical Sheet) ── */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  /* Hide everything unnecessary */
+  nav, footer, .btn-whatsapp, button, form, .breadcrumbs, .quick-actions, .contact-form, .breadcrumbs-nav, [routerLink="/joseluisjara"] {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  .vehicle-detail-page {
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .max-w-7xl {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Adjust Grid for Print */
+  .grid {
+    display: block !important;
+  }
+
+  .gallery-container {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .info-sheet, .sticky-card {
+    box-shadow: none !important;
+    border: 1px solid #eee !important;
+    margin-bottom: 1rem !important;
+    break-inside: avoid;
+  }
+
+  h1, h2, h3 {
+    color: #192A56 !important; /* Jara Primary */
+  }
+
+  .spec-row {
+    border-bottom: 1px solid #f0f0f0 !important;
+    padding: 6pt 0 !important;
   }
 }

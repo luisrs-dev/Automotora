@@ -51,7 +51,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: 'https://wa.me/56979970545?text=Hola%2C%20me%20interesa%20ver%20el%20cat%C3%A1logo',
       gradient: 'linear-gradient(100deg, #0B1230 0%, #1B2D6B 55%, rgba(11,18,48,0.4) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600&q=80&auto=format&fit=crop',
+      imageUrl: '/slide-home.webp', // Local hero image
       stats: [
         { value: '+20', label: 'Años de experiencia' },
         { value: '2', label: 'Sucursales' },
@@ -72,7 +72,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#',
       gradient: 'linear-gradient(100deg, #071525 0%, #0e2a4a 55%, rgba(7,21,37,0.35) 100%)',
       accentColor: '#5AAFD8',
-      imageUrl: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1600&q=80&auto=format&fit=crop',
+      imageUrl: '/slide1.webp', // Local hero image
       stats: [
         { value: '24 hrs', label: 'Respuesta' },
         { value: '$0', label: 'Costo tasación' },
@@ -93,7 +93,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#catalogo',
       gradient: 'linear-gradient(100deg, #060f1e 0%, #122040 55%, rgba(6,15,30,0.35) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop',
+      imageUrl: '/slide-financiar.webp', // Local hero image
       stats: [
         { value: '24 hrs', label: 'Aprobación' },
         { value: '+5', label: 'Instituciones' },

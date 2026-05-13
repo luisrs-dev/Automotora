@@ -38,4 +38,15 @@ export class VehicleDetailComponent implements OnInit {
     // Logic for form submission
     alert('Mensaje enviado con éxito. El vendedor se pondrá en contacto pronto.');
   }
+
+  contactWhatsApp(): void {
+    const v = this.vehicle();
+    if (!v) return;
+    const msg = `Hola Automotora José Luis Jara, estoy muy interesado en el ${v.brand} ${v.model} (${v.year}). ¿Me podrían dar más información?`;
+    window.open(`https://wa.me/56979970545?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  printVehicle(): void {
+    window.print();
+  }
 }

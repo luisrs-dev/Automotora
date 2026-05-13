@@ -1,12 +1,15 @@
 import { Injectable, computed, signal, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { Vehicle } from '../../shared/interfaces/vehicle.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
-  // Mock Data base
+  private readonly API_BASE_URL = 'http://127.0.0.1:8055';
+  private readonly ASSETS_URL = `${this.API_BASE_URL}/assets`;
+
+  // Mock Data base as fallback
   private readonly initialVehicles: Vehicle[] = [
     {
       id: 'v1', brand: 'Porsche', model: '911 Carrera S', year: 2023, price: 120500, priceCurrency: 'USD',
@@ -56,47 +59,51 @@ export class InventoryService {
     }
   ];
 
-  // ── STATE: Filtros activos ──────────────────────────────────
-  private vehiclesSignal = signal<Vehicle[]>([]);
+  // ── RESOURCE: Cargamos los datos usando httpResource ───────
+  private vehiclesResource = httpResource<any>(`${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`);
 
-  private http = inject(HttpClient);
-
-  constructor() {
-    this.loadVehicles();
-  }
-
-  private loadVehicles() {
-    this.http.get<any>('http://127.0.0.1:8055/items/Auto?fields=*,marca.*,modelo.*').subscribe({
-      next: (res) => {
-        console.log('res', res);
-        
-        if (res && res.data) {
-          const apiVehicles: Vehicle[] = res.data.map((item: any) => this.mapApiToVehicle(item));
-          this.vehiclesSignal.set(apiVehicles);
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching vehicles from API:', err);
-        // Fallback to mock data if API fails
-        this.vehiclesSignal.set(this.initialVehicles);
-      }
-    });
-  }
+  // ── STATE: Procesamos los datos con las URLs completas ─────
+  private vehiclesSignal = computed<Vehicle[]>(() => {
+    const res = this.vehiclesResource.value();
+    
+    if (res && res.data) {
+      const mappedVehicles = res.data.map((item: any) => this.mapApiToVehicle(item));
+      console.log('[mappedVehicles]',mappedVehicles);
+      return mappedVehicles;
+    }
+    
+    // Fallback a mock data si hay error
+    if (this.vehiclesResource.error()) {
+      console.error('Error fetching vehicles, falling back to mock data:', this.vehiclesResource.error());
+      return this.initialVehicles;
+    }
+    
+    return [];
+  });
 
   private mapApiToVehicle(item: any): Vehicle {
-    const parts = (item.Titulo || '').split(' ');
-    const derivedBrand = parts.length > 0 ? parts[0] : 'Desconocida';
-    const brand = item.marca?.Nombre || derivedBrand;
-    // Si la marca viene del objeto, la usamos; el modelo será el resto del título
-    // para evitar repetir la marca si el título empieza con ella.
-    const derivedModel = parts.length > 1 ? parts.slice(1).join(' ') : (item.Titulo || 'Desconocido');
-    const model = item.modelo?.Nombre || derivedModel;
+    // Manejo de Marca y Modelo (con fallback si son null)
+    console.log('[item]',item);
+    const brand = item.marca?.Nombre || 'Desconocida';
+    const model = item.modelo?.Nombre || 'Modelo no especificado';
 
+    // Procesamiento de Imágenes: Convertimos el array de IDs [1, 2, 3] en URLs completas
+    const galleryUrls = (item.imagenes || []).map((img: any) => 
+      `${this.ASSETS_URL}/${img.directus_files_id}`
+    );
+
+    // Usamos la primera imagen como principal, o un placeholder si no hay
+    const mainImageUrl = galleryUrls.length > 0 
+      ? galleryUrls[0] 
+      : 'https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&q=80&w=1200';
+
+    // Manejo de Transmisión
     let transmission: 'Manual' | 'Automático' = 'Manual';
-    if (item.Transmision && item.Transmision.toLowerCase().includes('auto')) transmission = 'Automático';
+    if (item.Transmision?.toLowerCase().includes('auto')) transmission = 'Automático';
 
+    // Manejo de Status basado en el JSON recibido
     let status: 'Disponible' | 'Reservado' | 'Vendido' = 'Disponible';
-    if (item.status === 'archived') status = 'Vendido';
+    if (item.status === 'archived' || item.status === 'vendido') status = 'Vendido';
     if (item.status === 'draft') status = 'Reservado';
 
     return {
@@ -106,21 +113,25 @@ export class InventoryService {
       year: item.Anio || 2000,
       price: item.Precio || 0,
       priceCurrency: 'CLP',
-      status: status,
+      status,
       bodyType: 'Sedan', 
       mileage: item.Kilometraje || 0,
       transmission,
-      fuel: 'Gasolina', // Default fallback
-      imageUrl: 'https://images.unsplash.com/photo-1623232973601-a9903518f270?auto=format&fit=crop&q=80&w=1200', 
+      fuel: 'Gasolina',
+      imageUrl: mainImageUrl, 
+      images: galleryUrls,
       description: item.Titulo || 'Sin descripción',
+      cylinderCapacity: item.Cilindrada || 'N/A',
+      
     };
   }
 
-  /**
-   * Obtiene un vehículo por su ID
-   */
+  constructor() {
+    // Ya no es necesario llamar a loadVehicles(), el recurso es reactivo
+  }
+
   getVehicleById(id: string): Vehicle | undefined {
-    return this.vehiclesSignal().find(v => v.id === id);
+    return this.vehiclesSignal().find((v: Vehicle) => v.id === id);
   }
 
   filterBrand    = signal<string>('Todas');
@@ -132,7 +143,7 @@ export class InventoryService {
 
   // ── COMPUTED: Vehículos filtrados ──────────────────────────
   filteredVehicles = computed(() => {
-    return this.vehiclesSignal().filter(v => {
+    return this.vehiclesSignal().filter((v: Vehicle) => {
       const matchBrand    = this.filterBrand()    === 'Todas' || v.brand    === this.filterBrand();
       const matchModel    = this.filterModel()    === 'Todos' || v.model    === this.filterModel();
       const matchBodyType = this.filterBodyType() === 'Todos' || v.bodyType === this.filterBodyType();
@@ -143,38 +154,33 @@ export class InventoryService {
   });
 
   // ── COMPUTED: Opciones de selects ─────────────────────────
-
   uniqueBrands = computed(() => {
-    const brands = new Set(this.vehiclesSignal().map(v => v.brand));
+    const brands = new Set(this.vehiclesSignal().map((v: Vehicle) => v.brand));
     return ['Todas', ...Array.from(brands).sort()];
   });
 
-  /**
-   * Modelos disponibles para la marca seleccionada.
-   * Si la marca es "Todas", muestra todos los modelos del catálogo.
-   */
   uniqueModelsForBrand = computed(() => {
     const brand = this.filterBrand();
     const vehicles = brand === 'Todas'
       ? this.vehiclesSignal()
-      : this.vehiclesSignal().filter(v => v.brand === brand);
-    const models = new Set(vehicles.map(v => v.model));
+      : this.vehiclesSignal().filter((v: Vehicle) => v.brand === brand);
+    const models = new Set(vehicles.map((v: Vehicle) => v.model));
     return ['Todos', ...Array.from(models).sort()];
   });
 
   uniqueBodyTypes = computed(() => {
-    const types = new Set(this.vehiclesSignal().map(v => v.bodyType));
+    const types = new Set(this.vehiclesSignal().map((v: Vehicle) => v.bodyType));
     return ['Todos', ...Array.from(types).sort()];
   });
 
   uniqueYears = computed(() => {
-    const years = new Set(this.vehiclesSignal().map(v => v.year));
-    return [0, ...Array.from(years).sort((a, b) => b - a)]; // desc: más nuevo primero
+    const years = new Set(this.vehiclesSignal().map((v: Vehicle) => v.year));
+    return [0, ...Array.from(years).sort((a: number, b: number) => b - a)];
   });
 
-  // ── Helper: cambiar marca y resetear modelo ─────────────────
+
   changeBrand(brand: string): void {
     this.filterBrand.set(brand);
-    this.filterModel.set('Todos'); // reset modelo al cambiar marca
+    this.filterModel.set('Todos');
   }
 }

@@ -53,6 +53,19 @@
   .nav-glass {
     @apply bg-white/70 dark:bg-surface-dark/70 backdrop-blur-md border-b border-gray-200/50 dark:border-surface-borderDark/50 sticky top-0 z-50;
   }
+
+  /* WhatsApp Button Style */
+  .btn-whatsapp {
+    @apply flex items-center justify-center gap-2 font-bold text-white transition-all duration-300 active:scale-95 shadow-lg cursor-pointer border-none;
+    background-color: #25D366;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  }
+
+  .btn-whatsapp:hover {
+    background-color: #1ebe5d;
+    @apply -translate-y-0.5 shadow-xl;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  }
 }
 
 body {
