@@ -4,73 +4,89 @@
 <!-- ════════════════════════════════════════════
      CATALOG SECTION
      ════════════════════════════════════════════ -->
-<section id="catalogo" class="py-20 bg-gray-50/50 dark:bg-black/20">
+<section id="catalogo" class="py-12 bg-gray-50/50 dark:bg-black/20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex flex-col lg:flex-row gap-10">
-
-      <!-- ── DESKTOP Sidebar Filters (hidden on mobile) ── -->
-      <aside
-        class="hidden lg:block w-full lg:w-1/4 h-fit sticky top-28 bg-white dark:bg-surface-cardDark p-6 rounded-2xl shadow-float dark:shadow-float-dark border border-gray-100 dark:border-surface-borderDark">
-        <h3 class="font-display font-bold text-xl text-jara-primary dark:text-white mb-6">Filtros Avanzados</h3>
-        <div class="space-y-6">
-          <!-- Filtro Marca -->
-          <ng-container *ngTemplateOutlet="filterControls"></ng-container>
-        </div>
-      </aside>
-
-      <!-- ── Results Grid ── -->
-      <main class="w-full lg:w-3/4">
-
-        <!-- Mobile: top bar with filter trigger -->
-        <div class="flex justify-between items-center mb-6 lg:mb-0">
-          <div>
-            <h2 class="text-2xl lg:text-3xl font-display font-bold text-jara-primary dark:text-white">Catálogo Premium</h2>
-            <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
-              Mostrando <strong class="text-jara-accent">{{ store.filteredVehicles().length }}</strong> vehículos.
-            </p>
-          </div>
-
-          <!-- Mobile filter trigger button -->
-          <button
-            class="filter-trigger lg:hidden"
-            (click)="openFilterSheet()"
-            id="mobile-filter-btn"
-            aria-label="Abrir filtros"
-          >
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M7 12h10M10 20h4"/>
-            </svg>
-            Filtros
-            @if (activeFilterCount() > 0) {
-              <span class="filter-trigger__badge">{{ activeFilterCount() }}</span>
-            }
-          </button>
-        </div>
-
-        @if (store.filteredVehicles().length === 0) {
-        <div class="bg-white dark:bg-surface-cardDark p-10 rounded-2xl text-center border border-gray-100 dark:border-surface-borderDark mt-6">
-          <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-            </path>
-          </svg>
-          <h3 class="text-xl font-display font-bold text-gray-900 dark:text-white">Sin stock disponible</h3>
-          <p class="text-gray-500 mt-2">No hay vehículos que coincidan con estos filtros.</p>
-          <button (click)="clearFilters()" class="mt-6 text-jara-accent hover:underline font-medium">
-            Limpiar Filtros
-          </button>
-        </div>
-        } @else {
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 lg:mt-0">
-          @for (veh of store.filteredVehicles(); track veh.id) {
-          <app-vehicle-card [vehicle]="veh"></app-vehicle-card>
-          }
-        </div>
-        }
-      </main>
-
+    <!-- Section heading -->
+    <div class="text-center mb-10">
+      <span class="inline-flex items-center gap-3 text-jara-accent text-xs font-bold tracking-widest uppercase mb-3">
+        <span class="w-10 h-px bg-jara-accent"></span>
+        Seminuevos en Talca
+        <span class="w-10 h-px bg-jara-accent"></span>
+      </span>
+      <h2 class="text-4xl lg:text-5xl font-display font-extrabold text-jara-primary dark:text-white tracking-tight">Elige el auto perfecto</h2>
+      <p class="text-gray-500 dark:text-gray-400 mt-3 text-base max-w-xl mx-auto">Todos nuestros vehículos están revisados, con garantía y con documentación al día.</p>
     </div>
+
+    <!-- ── DESKTOP Horizontal Filter Bar (hidden on mobile) ── -->
+    <div class="hidden lg:block mb-8">
+      <div class="bg-white dark:bg-surface-cardDark p-5 rounded-2xl shadow-float dark:shadow-float-dark border border-gray-100 dark:border-surface-borderDark">
+        <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+          <ng-container *ngTemplateOutlet="filterControlsHorizontal"></ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Grid -->
+    <main class="w-full">
+
+      <!-- Mobile: top bar with filter trigger + count -->
+      <div class="flex justify-between items-center mb-4 lg:hidden">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">
+          <strong class="text-jara-accent">{{ store.filteredVehicles().length }}</strong> vehículos encontrados
+        </p>
+        <!-- Mobile filter trigger button -->
+        <button
+          class="filter-trigger"
+          (click)="openFilterSheet()"
+          id="mobile-filter-btn"
+          aria-label="Abrir filtros"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M7 12h10M10 20h4"/>
+          </svg>
+          Filtros
+          @if (activeFilterCount() > 0) {
+            <span class="filter-trigger__badge">{{ activeFilterCount() }}</span>
+          }
+        </button>
+      </div>
+
+      <!-- Desktop: results count + clear -->
+      <div class="hidden lg:flex justify-between items-center mb-4">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">
+          Mostrando <strong class="text-jara-accent">{{ store.filteredVehicles().length }}</strong> vehículos.
+        </p>
+        @if (activeFilterCount() > 0) {
+          <button (click)="clearFilters()" class="text-sm text-red-500 hover:underline font-medium flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Limpiar filtros ({{ activeFilterCount() }})
+          </button>
+        }
+      </div>
+
+      @if (store.filteredVehicles().length === 0) {
+      <div class="bg-white dark:bg-surface-cardDark p-10 rounded-2xl text-center border border-gray-100 dark:border-surface-borderDark">
+        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+          </path>
+        </svg>
+        <h3 class="text-xl font-display font-bold text-gray-900 dark:text-white">Sin stock disponible</h3>
+        <p class="text-gray-500 mt-2">No hay vehículos que coincidan con estos filtros.</p>
+        <button (click)="clearFilters()" class="mt-6 text-jara-accent hover:underline font-medium">
+          Limpiar Filtros
+        </button>
+      </div>
+      } @else {
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (veh of store.filteredVehicles(); track veh.id) {
+        <app-vehicle-card [vehicle]="veh"></app-vehicle-card>
+        }
+      </div>
+      }
+    </main>
+
   </div>
 </section>
 
@@ -284,6 +300,66 @@
     </button>
   </div>
 </div>
+
+<!-- ════════════════════════════════════════════
+     HORIZONTAL FILTER BAR TEMPLATE (desktop only)
+     ════════════════════════════════════════════ -->
+<ng-template #filterControlsHorizontal>
+
+  <!-- Marca -->
+  <div>
+    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">Marca</label>
+    <select
+      [ngModel]="store.filterBrand()"
+      (ngModelChange)="store.changeBrand($event)"
+      class="w-full bg-gray-50 dark:bg-surface-dark border border-gray-200 dark:border-white/10 focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-xl px-3 py-2.5 text-sm dark:text-gray-200 transition-colors cursor-pointer">
+      @for (brand of store.uniqueBrands(); track brand) {
+        <option [value]="brand">{{ brand }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Modelo -->
+  <div>
+    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">Modelo</label>
+    <select
+      [ngModel]="store.filterModel()"
+      (ngModelChange)="store.filterModel.set($event)"
+      [disabled]="store.filterBrand() === 'Todas'"
+      class="w-full bg-gray-50 dark:bg-surface-dark border border-gray-200 dark:border-white/10 focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-xl px-3 py-2.5 text-sm dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+      @for (model of store.uniqueModelsForBrand(); track model) {
+        <option [value]="model">{{ model }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Año -->
+  <div>
+    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">Año</label>
+    <select
+      [ngModel]="store.filterYear()"
+      (ngModelChange)="store.filterYear.set(+$event)"
+      class="w-full bg-gray-50 dark:bg-surface-dark border border-gray-200 dark:border-white/10 focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-xl px-3 py-2.5 text-sm dark:text-gray-200 transition-colors cursor-pointer">
+      @for (year of store.uniqueYears(); track year) {
+        <option [value]="year">{{ year === 0 ? 'Todos los años' : year }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Tipo Carrocería -->
+  <div>
+    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide">Tipo</label>
+    <select
+      [ngModel]="store.filterBodyType()"
+      (ngModelChange)="store.filterBodyType.set($event)"
+      class="w-full bg-gray-50 dark:bg-surface-dark border border-gray-200 dark:border-white/10 focus:border-jara-accent focus:ring-1 focus:ring-jara-accent rounded-xl px-3 py-2.5 text-sm dark:text-gray-200 transition-colors cursor-pointer">
+      @for (type of store.uniqueBodyTypes(); track type) {
+        <option [value]="type">{{ type }}</option>
+      }
+    </select>
+  </div>
+
+</ng-template>
 
 <!-- ════════════════════════════════════════════
      FILTER CONTROLS TEMPLATE (shared by sidebar + sheet)

@@ -1,15 +1,19 @@
-import { Component, PLATFORM_ID, inject, signal, effect, afterNextRender } from '@angular/core';
+import { Component, PLATFORM_ID, inject, signal, effect, afterNextRender, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink],
-  templateUrl: './navbar.component.html'
+  imports: [RouterLink, RouterLinkActive],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   isDarkTheme = signal(false);
+  scrolled = signal(false);
+  menuOpen = signal(false);
+
   private readonly platformId = inject(PLATFORM_ID);
 
   constructor() {
@@ -33,8 +37,16 @@ export class NavbarComponent {
     });
   }
 
+  @HostListener('window:scroll')
+  onScroll() {
+    this.scrolled.set(window.scrollY > 20);
+  }
+
   toggleTheme() {
     this.isDarkTheme.update(val => !val);
   }
-}
 
+  toggleMenu() {
+    this.menuOpen.update(val => !val);
+  }
+}
