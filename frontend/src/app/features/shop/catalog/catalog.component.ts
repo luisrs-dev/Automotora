@@ -32,6 +32,9 @@ export class CatalogComponent {
     return count;
   });
 
+  /** Marcas reales del inventario (sin 'Todas') para la franja de marcas */
+  brandList = computed(() => this.store.uniqueBrands().filter(b => b !== 'Todas'));
+
   openFilterSheet(): void {
     this.isFilterSheetOpen.set(true);
     if (isPlatformBrowser(this.platformId)) {
@@ -53,5 +56,17 @@ export class CatalogComponent {
     this.store.filterYear.set(0);
     this.store.filterMinPrice.set(0);
     this.store.filterMaxPrice.set(50000000);
+  }
+
+  /** Aplica filtro de marca desde la franja de marcas y hace scroll al catálogo (y deselecciona si se vuelve a clickear) */
+  filterByBrand(brand: string): void {
+    if (this.store.filterBrand() === brand) {
+      this.store.changeBrand('Todas');
+    } else {
+      this.store.changeBrand(brand);
+    }
+    if (isPlatformBrowser(this.platformId)) {
+      document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

@@ -2,6 +2,49 @@
 <app-hero-slider></app-hero-slider>
 
 <!-- ════════════════════════════════════════════
+     BRAND CARDS STRIP — logo arriba, nombre abajo
+     ════════════════════════════════════════════ -->
+@if (brandList().length > 0) {
+  <div class="brand-cards-strip" aria-label="Filtrar por marca">
+    <div class="brand-cards-row">
+      @for (brand of brandList(); track brand) {
+        <button
+          class="brand-card"
+          [class.brand-card--active]="store.filterBrand() === brand"
+          (click)="filterByBrand(brand)"
+          type="button"
+          [attr.aria-label]="'Filtrar por ' + brand"
+          [attr.aria-pressed]="store.filterBrand() === brand"
+        >
+          <!-- Logo placeholder -->
+          <div class="brand-card__logo">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-card__icon">
+              <!-- Carrocería -->
+              <path d="M6 28h36v6a2 2 0 01-2 2H8a2 2 0 01-2-2v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <!-- Techo / cabina -->
+              <path d="M12 28l5-10h14l5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Ventana izq -->
+              <path d="M17 28l3.5-7h4L21 28h-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Ventana der -->
+              <path d="M27 28l3.5-7h4L27 28z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Rueda izq -->
+              <circle cx="14" cy="34" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="14" cy="34" r="1.5" fill="currentColor"/>
+              <!-- Rueda der -->
+              <circle cx="34" cy="34" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="34" cy="34" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <!-- Nombre de la marca -->
+          <span class="brand-card__name">{{ brand }}</span>
+        </button>
+      }
+    </div>
+  </div>
+}
+
+
+<!-- ════════════════════════════════════════════
      CATALOG SECTION
      ════════════════════════════════════════════ -->
 <section id="catalogo" class="py-12 bg-gray-50/50 dark:bg-black/20">
