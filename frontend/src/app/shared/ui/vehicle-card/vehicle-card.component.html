@@ -1,8 +1,11 @@
-<article class="vc" [class.vc--reserved]="vehicle.status === 'Reservado'">
-
+<a
+  class="vc"
+  [routerLink]="['/joseluisjara/vehiculo', vehicle.id]"
+  [class.vc--reserved]="vehicle.status === 'Reservado'"
+  aria-label="Ver detalles del vehículo"
+>
   <!-- ══ PHOTO ══ -->
-  <a class="vc__photo" [routerLink]="['/joseluisjara/vehiculo', vehicle.id]" tabindex="-1" aria-hidden="true">
-
+  <div class="vc__photo">
     <img
       [src]="vehicle.imageUrl"
       [alt]="vehicle.brand + ' ' + vehicle.model + ' ' + vehicle.year"
@@ -10,112 +13,84 @@
       loading="lazy"
     />
 
-    <!-- Photo count top-left -->
-    <span class="vc__photo-count">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
-      {{ vehicle.images?.length ?? 1 }}
-    </span>
+    <!-- Dynamic badges based on provided reference image -->
+    <div class="vc__badges">
+      @if (vehicle.status === 'Reservado') {
+        <span class="vc__badge vc__badge--reserved">Reservado</span>
+      } @else {
+        @if (vehicle.price < 9000000) {
+          <span class="vc__badge vc__badge--promo">
+            <span class="vc__badge-icon">$</span> PROMO
+          </span>
+        }
+        @if (vehicle.mileage < 50000) {
+          <span class="vc__badge vc__badge--low-km">
+            <svg class="vc__badge-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Pocos Kilómetros
+          </span>
+        }
+      }
+    </div>
 
-    <!-- Badge top-right -->
-    @if (vehicle.status === 'Reservado') {
-      <span class="vc__status-badge vc__status-badge--reserved">Reservado</span>
-    } @else if (vehicle.isNewArrival) {
-      <span class="vc__status-badge vc__status-badge--new">Nuevo Ingreso</span>
+    <!-- Hot flame icon top right if mileage is low or promo active -->
+    @if (vehicle.status !== 'Reservado' && (vehicle.price < 9000000 || vehicle.mileage < 30000)) {
+      <div class="vc__hot-indicator" aria-label="Auto destacado">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
     }
 
-    <!-- Reserved overlay -->
+    <!-- Reserved visual dim overlay -->
     @if (vehicle.status === 'Reservado') {
       <div class="vc__reserved-overlay"></div>
     }
-  </a>
+  </div>
 
   <!-- ══ BODY ══ -->
   <div class="vc__body">
+    
+    <!-- Title: capitalized brand, model & year -->
+    <h3 class="vc__title">
+      {{ vehicle.brand | uppercase }} {{ vehicle.model | uppercase }} {{ vehicle.year }}
+    </h3>
 
-    <!-- Title row: year brand model + heart -->
-    <div class="vc__title-row">
-      <div>
-        <h3 class="vc__title">
-          <a [routerLink]="['/joseluisjara/vehiculo', vehicle.id]">
-            {{ vehicle.year }} {{ vehicle.brand }} {{ vehicle.model }}
-          </a>
-        </h3>
-        <p class="vc__version">{{ vehicle.bodyType }} · {{ vehicle.transmission }}</p>
-      </div>
-      <button class="vc__heart" aria-label="Guardar favorito" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-        </svg>
-      </button>
+    <!-- Version/Tech details: e.g. 1.6T PRIME FWD 4X2 AT 5P -->
+    <p class="vc__subtitle">
+      {{ vehicle.cylinderCapacity ? vehicle.cylinderCapacity + 'L' : '2.0L' }} 
+      {{ vehicle.transmission === 'Automático' ? 'AT' : 'MT' }} 
+      {{ vehicle.bodyType | uppercase }} 4X2
+    </p>
+
+    <!-- Specs row separated by vertical lines -->
+    <div class="vc__specs-row">
+      <span class="vc__spec-item">{{ vehicle.mileage | number:'1.0-0' }} km</span>
+      <span class="vc__spec-divider">|</span>
+      <span class="vc__spec-item">{{ vehicle.transmission }}</span>
+      <span class="vc__spec-divider">|</span>
+      <span class="vc__spec-item">{{ vehicle.fuel }}</span>
     </div>
 
-    <!-- Price -->
-    <div class="vc__price-row">
-      <span class="vc__price">
+    <!-- Divider line -->
+    <div class="vc__body-divider"></div>
+
+    <!-- Price Section -->
+    <div class="vc__price-container">
+      <div class="vc__price-value">
         {{ vehicle.price | currency:vehicle.priceCurrency:'symbol-narrow':'1.0-0' }}
-      </span>
-      <span class="vc__price-currency">{{ vehicle.priceCurrency }}</span>
-    </div>
-
-    <!-- Divider -->
-    <hr class="vc__divider"/>
-
-    <!-- Specs grid -->
-    <dl class="vc__specs">
-
-      <div class="vc__spec">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
-        </svg>
-        <span>{{ vehicle.bodyType }}</span>
       </div>
-
-      <div class="vc__spec">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
-        </svg>
-        <span>{{ vehicle.fuel }}</span>
-      </div>
-
-      <div class="vc__spec">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4l3 3"/>
-        </svg>
-        <span>{{ vehicle.mileage | number:'1.0-0' }} km</span>
-      </div>
-
-      <div class="vc__spec">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <path stroke-linecap="round" d="M12 2a7 7 0 017 7c0 4.97-7 13-7 13S5 13.97 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/>
-        </svg>
-        <span>{{ vehicle.location ?? 'Disponible' }}</span>
-      </div>
-
-    </dl>
-
-    <!-- Actions -->
-    <div class="vc__actions">
+      <!-- Promo dynamic discount bonus (usually 3-4% of car price, rounded to nearest 100k) -->
       @if (vehicle.status !== 'Reservado') {
-        <button
-          (click)="contactWhatsApp()"
-          class="vc__btn vc__btn--whatsapp"
-          id="contactar-{{ vehicle.id }}"
-          type="button"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" class="vc__btn-icon">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Contactar
-        </button>
-        <a
-          [routerLink]="['/joseluisjara/vehiculo', vehicle.id]"
-          class="vc__btn vc__btn--primary"
-          id="ver-auto-{{ vehicle.id }}"
-        >Ver detalles</a>
+        <div class="vc__bonus-tag">
+          Incluye bono de {{ (vehicle.price * 0.04) | currency:vehicle.priceCurrency:'symbol-narrow':'1.0-0' }}
+        </div>
       } @else {
-        <span class="vc__btn vc__btn--disabled">En proceso de venta</span>
+        <div class="vc__bonus-tag vc__bonus-tag--disabled">
+          No disponible para financiamiento
+        </div>
       }
     </div>
 
   </div>
-</article>
+</a>
