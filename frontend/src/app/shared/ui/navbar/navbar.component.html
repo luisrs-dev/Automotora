@@ -43,6 +43,9 @@
       <a routerLink="/joseluisjara" routerLinkActive="navbar__link--active" [routerLinkActiveOptions]="{exact:true}" class="navbar__link">
         Catálogo
       </a>
+      <a routerLink="/joseluisjara/compramos-tu-auto" routerLinkActive="navbar__link--active" class="navbar__link">
+        Compramos tu auto
+      </a>
       <a href="#" class="navbar__link">Financiamiento</a>
       <a href="#" class="navbar__link">Nosotros</a>
       <a href="#" class="navbar__link">Contacto</a>
@@ -104,6 +107,7 @@
   @if (menuOpen()) {
     <nav class="navbar__mobile-menu" aria-label="Menú móvil">
       <a routerLink="/joseluisjara" (click)="toggleMenu()" class="navbar__mobile-link">Catálogo</a>
+      <a routerLink="/joseluisjara/compramos-tu-auto" (click)="toggleMenu()" class="navbar__mobile-link">Compramos tu auto</a>
       <a href="#" (click)="toggleMenu()" class="navbar__mobile-link">Financiamiento</a>
       <a href="#" (click)="toggleMenu()" class="navbar__mobile-link">Nosotros</a>
       <a href="#" (click)="toggleMenu()" class="navbar__mobile-link">Contacto</a>

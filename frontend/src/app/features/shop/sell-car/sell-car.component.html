@@ -1,0 +1,401 @@
+<section class="sell-car">
+  <div class="sell-car__container">
+
+    <!-- ══ LEFT SIDE — Info (Dynamic based on Step) ══ -->
+    <div class="sell-car__info">
+      @if (step() === 1) {
+        <a routerLink="/joseluisjara" class="sell-car__back" aria-label="Volver al catálogo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Volver
+        </a>
+
+        <h1 class="sell-car__title">Compramos tu Auto</h1>
+        <p class="sell-car__description">
+          Obtén una tasación inmediata al mejor precio.
+          Realiza tu venta de forma segura, rápida y confiable.
+        </p>
+
+        <ol class="sell-car__steps">
+          <li class="sell-car__step sell-car__step--active">
+            <span class="sell-car__step-number">1</span>
+            <span class="sell-car__step-text">Ingresa tus datos</span>
+          </li>
+          <li class="sell-car__step">
+            <span class="sell-car__step-number">2</span>
+            <span class="sell-car__step-text">Ingresa tu auto</span>
+          </li>
+          <li class="sell-car__step">
+            <span class="sell-car__step-number">3</span>
+            <span class="sell-car__step-text">Recibe oferta</span>
+          </li>
+        </ol>
+      } @else if (step() === 2) {
+        <button (click)="onPrevStep()" class="sell-car__back-btn" aria-label="Volver al paso 1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Volver
+        </button>
+
+        <h1 class="sell-car__title">Tasa tu auto</h1>
+        <p class="sell-car__description">
+          En este paso te pediremos los datos de tu auto, y así obtendrás una oferta de forma inmediata.
+        </p>
+
+        <ul class="sell-car__bullet-list">
+          <li class="sell-car__bullet-item">
+            <span class="sell-car__bullet-check">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="sell-car__bullet-text">El mejor precio del mercado</span>
+          </li>
+          <li class="sell-car__bullet-item">
+            <span class="sell-car__bullet-check">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="sell-car__bullet-text">Transparencia y seguridad durante el proceso</span>
+          </li>
+          <li class="sell-car__bullet-item">
+            <span class="sell-car__bullet-check">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="sell-car__bullet-text">Proceso rápido y confiable</span>
+          </li>
+        </ul>
+      } @else {
+        <h1 class="sell-car__title">¡Tasación en proceso!</h1>
+        <p class="sell-car__description">
+          Tu auto está siendo analizado por nuestro sistema de valoración en tiempo real.
+        </p>
+      }
+
+      <!-- Trust badges (Bottom left) -->
+      <div class="sell-car__trust">
+        <div class="sell-car__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span>Proceso 100% seguro</span>
+        </div>
+        <div class="sell-car__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Respuesta en 24 hrs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RIGHT SIDE — Interactive Step Cards ══ -->
+    <div class="sell-car__form-wrapper">
+
+      <!-- Step indicator -->
+      <div class="sell-car__step-indicator">
+        <span class="sell-car__step-badge">{{ step() }}</span>
+        <span class="sell-car__step-label">
+          @if (step() === 1) { Datos personales }
+          @else if (step() === 2) { Datos del vehículo }
+          @else { Tasación completada }
+        </span>
+      </div>
+
+      <!-- ── STEP 1: Personal Data ── -->
+      @if (step() === 1) {
+        <div class="sell-car__form-card">
+          <h2 class="sell-car__form-title">Comencemos con tu información</h2>
+          <p class="sell-car__form-subtitle">Ingresa tu <strong>RUT</strong> y verifica tus datos.</p>
+
+          <form [formGroup]="personalForm" (ngSubmit)="onNextStep()" class="sell-car__form" novalidate>
+
+            <!-- RUT -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('rut')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('rut')">
+              <label class="sell-car__label" for="sell-rut">RUT</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-rut"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="rut"
+                  placeholder="12.345.678-9"
+                  (input)="formatRut($event)"
+                  autocomplete="off"
+                />
+                @if (isPersonalFieldValid('rut')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Nombre -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('nombre')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('nombre')">
+              <label class="sell-car__label" for="sell-nombre">Nombre</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-nombre"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="nombre"
+                  placeholder="Tu nombre"
+                  autocomplete="given-name"
+                />
+                @if (isPersonalFieldValid('nombre')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Apellido -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('apellido')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('apellido')">
+              <label class="sell-car__label" for="sell-apellido">Apellido</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-apellido"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="apellido"
+                  placeholder="Tu apellido"
+                  autocomplete="family-name"
+                />
+                @if (isPersonalFieldValid('apellido')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Correo -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('correo')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('correo')">
+              <label class="sell-car__label" for="sell-correo">Correo *</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-correo"
+                  type="email"
+                  class="sell-car__input"
+                  formControlName="correo"
+                  placeholder="correo@ejemplo.com"
+                  autocomplete="email"
+                />
+                @if (isPersonalFieldValid('correo')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Celular -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('celular')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('celular')">
+              <label class="sell-car__label" for="sell-celular">Celular</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-celular"
+                  type="tel"
+                  class="sell-car__input"
+                  formControlName="celular"
+                  placeholder="+56 9 1234 5678"
+                  (input)="formatPhone($event)"
+                  autocomplete="tel"
+                />
+                @if (isPersonalFieldValid('celular')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Checkbox -->
+            <label class="sell-car__checkbox" for="sell-accept-1">
+              <input id="sell-accept-1" type="checkbox" formControlName="acceptComms" />
+              <span class="sell-car__checkbox-mark"></span>
+              <span class="sell-car__checkbox-text">
+                Acepto recibir comunicaciones de Automotora José Luis Jara.
+                <a href="#" class="sell-car__privacy-link">Revisa nuestra Política de privacidad.</a>
+              </span>
+            </label>
+
+            <!-- Submit -->
+            <button type="submit" class="sell-car__submit" [disabled]="personalForm.invalid">
+              Continuar
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+
+          </form>
+        </div>
+      }
+
+      <!-- ── STEP 2: Vehicle Data ── -->
+      @else if (step() === 2) {
+        <div class="sell-car__form-card sell-car__form-card--relative">
+          
+          <!-- Sleek Loading Overlay -->
+          @if (loadingPatente()) {
+            <div class="sell-car__overlay-loader">
+              <div class="sell-car__spinner-large"></div>
+              <p class="sell-car__overlay-text">{{ loadingMessage() }}</p>
+              <div class="sell-car__progress-bar">
+                <div class="sell-car__progress-fill"></div>
+              </div>
+            </div>
+          }
+
+          <h2 class="sell-car__form-title">Ingresa los datos de tu auto en parte de pago para que lo tasemos 100% online</h2>
+          <p class="sell-car__form-subtitle">Escribe la patente y verifica los datos del auto que quieres tasar para que te entreguemos una oferta.</p>
+
+          <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="sell-car__form" novalidate>
+
+            <!-- Patente -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('patente')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('patente')">
+              <label class="sell-car__label" for="sell-patente">Patente</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-patente"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="patente"
+                  placeholder="AA-AA-AA"
+                  (input)="formatPatente($event)"
+                  (blur)="onPatenteBlur()"
+                  autocomplete="off"
+                />
+                @if (loadingPatente()) {
+                  <div class="sell-car__spinner-container">
+                    <span class="sell-car__spinner" aria-hidden="true"></span>
+                  </div>
+                } @else if (isVehicleFieldValid('patente')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Año -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('anio')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('anio')">
+              <label class="sell-car__label" for="sell-anio">Año</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-anio"
+                  type="number"
+                  class="sell-car__input"
+                  formControlName="anio"
+                  placeholder="Año"
+                  autocomplete="off"
+                />
+                @if (isVehicleFieldValid('anio')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Marca -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('marca')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('marca')">
+              <label class="sell-car__label" for="sell-marca">Marca</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-marca"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="marca"
+                  placeholder="Marca"
+                  autocomplete="off"
+                />
+                @if (isVehicleFieldValid('marca')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Modelo -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('modelo')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('modelo')">
+              <label class="sell-car__label" for="sell-modelo">Modelo</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-modelo"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="modelo"
+                  placeholder="Modelo"
+                  autocomplete="off"
+                />
+                @if (isVehicleFieldValid('modelo')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+            </div>
+
+            <!-- Versión -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('version')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('version')">
+              <label class="sell-car__label" for="sell-version">Versión</label>
+              <div class="sell-car__input-wrapper">
+                <select id="sell-version" class="sell-car__input sell-car__select" formControlName="version">
+                  <option value="" disabled selected hidden>Versión</option>
+                  @for (v of versionsList; track v) {
+                    <option [value]="v">{{ v }}</option>
+                  }
+                </select>
+                <div class="sell-car__select-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kilometraje -->
+            <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('kilometraje')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('kilometraje')">
+              <label class="sell-car__label" for="sell-km">Kilometraje</label>
+              <div class="sell-car__input-wrapper">
+                <input
+                  id="sell-km"
+                  type="number"
+                  class="sell-car__input"
+                  formControlName="kilometraje"
+                  placeholder="Kilometraje"
+                  autocomplete="off"
+                />
+                @if (isVehicleFieldValid('kilometraje')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
+              </div>
+              <span class="sell-car__helper-text">Puede ser un aproximado. Máximo 100.000 km.</span>
+            </div>
+
+            <!-- Checkbox -->
+            <label class="sell-car__checkbox" for="sell-accept-2">
+              <input id="sell-accept-2" type="checkbox" formControlName="acceptTerms" />
+              <span class="sell-car__checkbox-mark"></span>
+              <span class="sell-car__checkbox-text">
+                Acepto los <a href="#" class="sell-car__privacy-link">términos y condiciones y política de privacidad</a>.
+              </span>
+            </label>
+
+            <!-- Buttons -->
+            <div class="sell-car__buttons">
+              <button type="button" (click)="onPrevStep()" class="sell-car__btn-back">
+                Atrás
+              </button>
+              <button type="submit" class="sell-car__submit" [disabled]="vehicleForm.invalid">
+                Obtener Oferta
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      }
+
+      <!-- ── STEP 3: Success State ── -->
+      @else {
+        <div class="sell-car__success">
+          <div class="sell-car__success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h2 class="sell-car__success-title">¡Oferta e información enviada!</h2>
+          <p class="sell-car__success-text">
+            Hemos recibido los datos del vehículo **({{ vehicleForm.get('marca')?.value }} {{ vehicleForm.get('modelo')?.value }} - Patente {{ vehicleForm.get('patente')?.value }})** y tus datos personales. 
+            Te enviaremos una propuesta formal y agendaremos una revisión virtual o presencial para concluir el proceso en menos de **24 horas**.
+          </p>
+          <button class="sell-car__submit" (click)="resetForm()">
+            Tasación de otro auto
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>

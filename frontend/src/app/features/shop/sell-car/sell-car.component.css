@@ -1,0 +1,786 @@
+.sell-car {
+  min-height: calc(100vh - 68px - 36px); /* adjusting for header & announce bar */
+  background: #f4f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+:host-context(.dark) .sell-car {
+  background: #0d1117;
+}
+
+.sell-car__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  max-width: 72rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .sell-car__container {
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+    gap: 4rem;
+  }
+}
+
+/* ══ LEFT SIDE — Info ══ */
+.sell-car__info {
+  display: flex;
+  flex-direction: column;
+  color: #192a56;
+}
+
+:host-context(.dark) .sell-car__info {
+  color: #ffffff;
+}
+
+.sell-car__back,
+.sell-car__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4b5563;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 2rem;
+  transition: color 0.2s ease;
+  width: max-content;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sell-car__back:hover,
+.sell-car__back-btn:hover {
+  color: #0abde3;
+}
+
+.sell-car__back svg,
+.sell-car__back-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+:host-context(.dark) .sell-car__back,
+:host-context(.dark) .sell-car__back-btn {
+  color: #9ca3af;
+}
+:host-context(.dark) .sell-car__back:hover,
+:host-context(.dark) .sell-car__back-btn:hover {
+  color: #0abde3;
+}
+
+.sell-car__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sell-car__title {
+    font-size: 2.75rem;
+  }
+}
+
+.sell-car__description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 2.5rem;
+  max-width: 32rem;
+}
+
+:host-context(.dark) .sell-car__description {
+  color: #9ca3af;
+}
+
+/* Steps list */
+.sell-car__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sell-car__step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.sell-car__step--active {
+  opacity: 1;
+}
+
+.sell-car__step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #e2e8f0;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #475569;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.sell-car__step--active .sell-car__step-number {
+  background-color: #0abde3;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(10, 189, 227, 0.25);
+}
+
+.sell-car__step-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+:host-context(.dark) .sell-car__step-number {
+  background-color: #1e293b;
+  color: #94a3b8;
+}
+:host-context(.dark) .sell-car__step--active .sell-car__step-number {
+  background-color: #0abde3;
+  color: #ffffff;
+}
+
+/* Check bullets for Step 2 left side */
+.sell-car__bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sell-car__bullet-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sell-car__bullet-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background-color: #0abde3;
+  color: #ffffff;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(10, 189, 227, 0.2);
+}
+
+.sell-car__bullet-check svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.sell-car__bullet-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Trust badges */
+.sell-car__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  border-top: 1px solid rgba(25, 42, 86, 0.08);
+  padding-top: 2rem;
+}
+
+:host-context(.dark) .sell-car__trust {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.sell-car__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+:host-context(.dark) .sell-car__trust-item {
+  color: #94a3b8;
+}
+
+.sell-car__trust-item svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #0abde3;
+}
+
+/* ══ RIGHT SIDE — Form ══ */
+.sell-car__form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sell-car__step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
+  align-self: flex-start;
+  background-color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+:host-context(.dark) .sell-car__step-indicator {
+  background-color: #161c27;
+  color: #94a3b8;
+}
+
+.sell-car__step-badge {
+  background-color: #64748b;
+  color: #ffffff;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.sell-car__form-card {
+  background-color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px -5px rgba(25, 42, 86, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(25, 42, 86, 0.03);
+}
+
+:host-context(.dark) .sell-car__form-card {
+  background-color: #161c27;
+  border-color: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.sell-car__form-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #192a56;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+:host-context(.dark) .sell-car__form-title {
+  color: #ffffff;
+}
+
+.sell-car__form-subtitle {
+  font-size: 0.925rem;
+  color: #64748b;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+:host-context(.dark) .sell-car__form-subtitle {
+  color: #94a3b8;
+}
+
+.sell-car__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Field Container */
+.sell-car__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.sell-car__label {
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+:host-context(.dark) .sell-car__label {
+  color: #94a3b8;
+}
+
+.sell-car__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sell-car__input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+  color: #192a56;
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:host-context(.dark) .sell-car__input {
+  background-color: #0d1117;
+  border-color: #243050;
+  color: #ffffff;
+}
+
+/* Active focus using Jara Accent (#0ABDE3) as specified */
+.sell-car__input:focus {
+  border-color: #0abde3;
+  box-shadow: 0 0 0 4px rgba(10, 189, 227, 0.15);
+}
+
+.sell-car__field:focus-within .sell-car__label {
+  color: #0abde3;
+}
+
+/* Dropdown specific */
+.sell-car__select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.sell-car__select-arrow {
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+}
+
+.sell-car__select-arrow svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+:host-context(.dark) .sell-car__select-arrow {
+  color: #9ca3af;
+}
+
+.sell-car__helper-text {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+:host-context(.dark) .sell-car__helper-text {
+  color: #94a3b8;
+}
+
+/* Validation states */
+.sell-car__field--valid .sell-car__input {
+  border-color: #10b981;
+}
+.sell-car__field--valid .sell-car__input:focus {
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+.sell-car__field--valid .sell-car__label {
+  color: #10b981 !important;
+}
+
+.sell-car__field--invalid .sell-car__input {
+  border-color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.01);
+}
+.sell-car__field--invalid .sell-car__input:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+.sell-car__field--invalid .sell-car__label {
+  color: #ef4444 !important;
+}
+
+.sell-car__check {
+  position: absolute;
+  right: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #10b981;
+  pointer-events: none;
+}
+
+.sell-car__spinner-container {
+  position: absolute;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.sell-car__spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #cbd5e1;
+  border-top-color: #0abde3;
+  border-radius: 50%;
+  animation: sellCarSpin 0.8s linear infinite;
+}
+
+:host-context(.dark) .sell-car__spinner {
+  border-color: #243050;
+  border-top-color: #0abde3;
+}
+
+@keyframes sellCarSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sell-car__form-card--relative {
+  position: relative;
+  overflow: hidden;
+}
+
+.sell-car__overlay-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  animation: fadeInOverlay 0.25s ease forwards;
+}
+
+:host-context(.dark) .sell-car__overlay-loader {
+  background: rgba(22, 28, 39, 0.95);
+}
+
+.sell-car__spinner-large {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 4px solid #cbd5e1;
+  border-top-color: #0abde3;
+  border-radius: 50%;
+  animation: sellCarSpin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  box-shadow: 0 0 15px rgba(10, 189, 227, 0.1);
+}
+
+:host-context(.dark) .sell-car__spinner-large {
+  border-color: #243050;
+  border-top-color: #0abde3;
+}
+
+.sell-car__overlay-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #192a56;
+  text-align: center;
+  animation: pulseMessage 1.5s ease-in-out infinite;
+  max-width: 20rem;
+  line-height: 1.4;
+}
+
+:host-context(.dark) .sell-car__overlay-text {
+  color: #ffffff;
+}
+
+.sell-car__progress-bar {
+  width: 12rem;
+  height: 6px;
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+:host-context(.dark) .sell-car__progress-bar {
+  background-color: #243050;
+}
+
+.sell-car__progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0abde3, #192a56);
+  border-radius: 9999px;
+  animation: progressFillAnim 2.5s linear forwards;
+}
+
+:host-context(.dark) .sell-car__progress-fill {
+  background: linear-gradient(90deg, #0abde3, #ffffff);
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulseMessage {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes progressFillAnim {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Checkbox Style */
+.sell-car__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 0.5rem;
+}
+
+.sell-car__checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.sell-car__checkbox-mark {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.375rem;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  margin-top: 0.125rem;
+}
+
+:host-context(.dark) .sell-car__checkbox-mark {
+  background-color: #0d1117;
+  border-color: #243050;
+}
+
+.sell-car__checkbox input:checked ~ .sell-car__checkbox-mark {
+  background-color: #0abde3;
+  border-color: #0abde3;
+}
+
+.sell-car__checkbox-mark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.sell-car__checkbox input:checked ~ .sell-car__checkbox-mark::after {
+  display: block;
+}
+
+.sell-car__checkbox-text {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+:host-context(.dark) .sell-car__checkbox-text {
+  color: #9ca3af;
+}
+
+.sell-car__privacy-link {
+  color: #0abde3;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Submit and Navigation Buttons */
+.sell-car__buttons {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+.sell-car__btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #4b5563;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sell-car__btn-back:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+:host-context(.dark) .sell-car__btn-back {
+  background-color: #161c27;
+  border-color: #243050;
+  color: #9ca3af;
+}
+:host-context(.dark) .sell-car__btn-back:hover {
+  background-color: #0d1117;
+  color: #ffffff;
+}
+
+.sell-car__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #0abde3;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 1rem 2rem;
+  border-radius: 0.85rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(10, 189, 227, 0.3);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100%;
+}
+
+.sell-car__submit:hover:not(:disabled) {
+  background-color: #0792b0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(10, 189, 227, 0.45);
+}
+
+.sell-car__submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.sell-car__submit:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+:host-context(.dark) .sell-car__submit:disabled {
+  background-color: #1e293b;
+  color: #475569;
+}
+
+.sell-car__submit svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.sell-car__submit:hover svg {
+  transform: translateX(3px);
+}
+
+/* ══ SUCCESS STATE ══ */
+.sell-car__success {
+  background-color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 3rem 2rem;
+  box-shadow: 0 10px 30px -5px rgba(25, 42, 86, 0.05);
+  border: 1px solid rgba(25, 42, 86, 0.03);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+:host-context(.dark) .sell-car__success {
+  background-color: #161c27;
+  border-color: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.sell-car__success-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sell-car__success-icon svg {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.sell-car__success-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #192a56;
+}
+
+:host-context(.dark) .sell-car__success-title {
+  color: #ffffff;
+}
+
+.sell-car__success-text {
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: #4b5563;
+  max-width: 26rem;
+  margin-bottom: 1rem;
+}
+
+:host-context(.dark) .sell-car__success-text {
+  color: #9ca3af;
+}
