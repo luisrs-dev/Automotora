@@ -5,53 +5,18 @@
   width: 100%;
   background: linear-gradient(90deg, #1B2D6B 0%, #162255 100%);
   color: rgba(255, 255, 255, 0.9);
-  overflow: hidden;
   height: 36px;
   display: flex;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  padding: 0 1rem;
 }
 
-/* Fade masks on sides */
-.announce-bar::before,
-.announce-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  z-index: 2;
-  pointer-events: none;
-}
-.announce-bar::before {
-  left: 0;
-  background: linear-gradient(to right, #1B2D6B, transparent);
-}
-.announce-bar::after {
-  right: 0;
-  background: linear-gradient(to left, #162255, transparent);
-}
-
-.announce-track {
-  overflow: hidden;
-  flex: 1;
-}
-
-.announce-strip {
+.announce-content {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  width: max-content;
-  animation: announceScroll 38s linear infinite;
-}
-
-.announce-strip:hover {
-  animation-play-state: paused;
-}
-
-@keyframes announceScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  gap: 1rem;
+  max-width: 80rem;
 }
 
 .announce-item {
@@ -82,6 +47,19 @@
   font-size: 1rem;
   line-height: 1;
   flex-shrink: 0;
+}
+
+/* Hide financing item on small screens */
+.announce-dot--desktop,
+.announce-item--desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .announce-dot--desktop,
+  .announce-item--desktop {
+    display: inline-flex;
+  }
 }
 
 /* ============================================================
@@ -124,6 +102,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  gap: 0.75rem;
   text-decoration: none;
 }
 
@@ -131,6 +110,31 @@
   height: 44px;
   width: auto;
   object-fit: contain;
+}
+
+.navbar__logo-divider {
+  width: 1px;
+  height: 32px;
+  background: #9ca3af;
+  flex-shrink: 0;
+}
+
+:host-context(.dark) .navbar__logo-divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.navbar__logo-tagline {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1B2D6B;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+:host-context(.dark) .navbar__logo-tagline {
+  color: #ffffff;
 }
 
 /* ── Nav links ── */
