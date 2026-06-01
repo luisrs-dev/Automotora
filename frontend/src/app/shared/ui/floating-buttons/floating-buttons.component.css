@@ -1,0 +1,214 @@
+.floating-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.25rem;
+  pointer-events: none; /* Make container click-through */
+}
+
+/* Base styles for both floating buttons */
+.btn-sell-car, .btn-float-whatsapp {
+  pointer-events: auto; /* Re-enable pointer events for the buttons themselves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ────────────────────────────────────────────────────────
+   "Compramos tu auto" Button
+   ──────────────────────────────────────────────────────── */
+.btn-sell-car {
+  position: relative;
+  background: linear-gradient(135deg, #D91A2A, #FF4B5A);
+  color: #ffffff;
+  padding: 0.85rem 1.6rem;
+  border-radius: 9999px;
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  gap: 0.5rem;
+  overflow: visible; /* To allow the pulse ring to expand beyond the borders */
+  animation: entryFloat 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.btn-sell-car__icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.btn-sell-car__text {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover state */
+.btn-sell-car:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(217, 26, 42, 0.45);
+  background: linear-gradient(135deg, #e62233, #ff5e6c);
+}
+
+.btn-sell-car:hover .btn-sell-car__icon {
+  transform: rotate(-10deg) scale(1.1);
+}
+
+/* Active State */
+.btn-sell-car:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+/* Constant pulsing halo around the button */
+.btn-sell-car__pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid rgba(217, 26, 42, 0.6);
+  pointer-events: none;
+  animation: sellCarPulse 2.4s cubic-bezier(0.25, 0, 0, 1) infinite;
+}
+
+@keyframes sellCarPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2, 1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────────────────────
+   WhatsApp Floating Button
+   ──────────────────────────────────────────────────────── */
+.whatsapp-float-wrapper {
+  pointer-events: auto; /* Allow clicks */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Apply elegant float animation on the wrapper */
+  animation: whatsappFloat 4s ease-in-out infinite;
+}
+
+.btn-float-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: entryFloat 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Hover state */
+.btn-float-whatsapp:hover {
+  transform: translateY(-4px) scale(1.08); /* Small additional hover lift */
+  background: linear-gradient(135deg, #2ae26e, #149c8c);
+  box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+}
+
+.btn-float-whatsapp:hover .btn-float-whatsapp__icon {
+  transform: scale(1.15) rotate(8deg);
+}
+
+.btn-float-whatsapp:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+/* Elegant subtle ripple background effect around WhatsApp button */
+.btn-float-whatsapp__elegant-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(37, 211, 102, 0.25);
+  pointer-events: none;
+  animation: elegantRipple 3s ease-out infinite;
+}
+
+@keyframes elegantRipple {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.2;
+    border-color: rgba(37, 211, 102, 0.4);
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────────────────────
+   Animations
+   ──────────────────────────────────────────────────────── */
+@keyframes entryFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes whatsappFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ────────────────────────────────────────────────────────
+   Responsive Behavior
+   ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .floating-container {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    gap: 1rem;
+  }
+  
+  .btn-sell-car {
+    padding: 0.75rem 1.3rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+  
+  .btn-float-whatsapp {
+    width: 54px;
+    height: 54px;
+  }
+  
+  .btn-float-whatsapp__icon {
+    width: 28px;
+    height: 28px;
+  }
+}

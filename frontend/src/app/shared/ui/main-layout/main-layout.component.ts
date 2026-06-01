@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { AiChatbotComponent } from '../ai-chatbot/ai-chatbot.component';
+import { FloatingButtonsComponent } from '../floating-buttons/floating-buttons.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, AiChatbotComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, FloatingButtonsComponent, FooterComponent],
   template: `
     <app-navbar></app-navbar>
     <main>
       <router-outlet></router-outlet>
     </main>
     <app-footer></app-footer>
-    <app-ai-chatbot></app-ai-chatbot>
+    <app-floating-buttons></app-floating-buttons>
   `,
   styles: [`
     main {
