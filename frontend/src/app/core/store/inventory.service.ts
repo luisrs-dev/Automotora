@@ -6,7 +6,7 @@ import { Vehicle } from '../../shared/interfaces/vehicle.interface';
   providedIn: 'root'
 })
 export class InventoryService {
-  private readonly API_BASE_URL = 'http://127.0.0.1:8055';
+  private readonly API_BASE_URL = 'http://31.97.9.216:8055';
   private readonly ASSETS_URL = `${this.API_BASE_URL}/assets`;
 
   // Mock Data base as fallback
