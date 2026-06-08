@@ -60,7 +60,10 @@ export class InventoryService {
   ];
 
   // ── RESOURCE: Cargamos los datos usando httpResource ───────
-  private vehiclesResource = httpResource<any>(`${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`);
+  // private vehiclesResource = httpResource<any>(`${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`);
+  private vehiclesResource = httpResource<any>(
+  `${this.API_BASE_URL}/items/Auto?fields=*,Marca.*,Modelo.*,Auto_files.directus_files_id`
+);
 
   // ── STATE: Procesamos los datos con las URLs completas ─────
   private vehiclesSignal = computed<Vehicle[]>(() => {
