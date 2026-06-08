@@ -8,7 +8,7 @@ import {
   PLATFORM_ID,
   inject,
 } from '@angular/core';
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface SliderSlide {
   id: number;
@@ -28,7 +28,7 @@ export interface SliderSlide {
 @Component({
   selector: 'app-hero-slider',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './hero-slider.component.html',
   styleUrls: ['./hero-slider.component.css'],

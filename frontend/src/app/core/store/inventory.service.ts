@@ -67,7 +67,7 @@ export class InventoryService {
 
   private vehiclesResource = httpResource<any>(() => {
     const timestamp = new Date().getTime();
-    return `${this.API_BASE_URL}items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id&_ts=${timestamp}`;
+    return `${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id&_ts=${timestamp}`;
   });
 
   // ── STATE: Procesamos los datos con las URLs completas ─────
