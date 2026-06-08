@@ -784,3 +784,31 @@
 :host-context(.dark) .sell-car__success-text {
   color: #9ca3af;
 }
+
+/* ══ ERROR BANNER ══ */
+.sell-car__error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: fadeInOverlay 0.3s ease forwards;
+}
+
+.sell-car__error svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+:host-context(.dark) .sell-car__error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+}

@@ -361,16 +361,31 @@
               </span>
             </label>
 
+            <!-- Error message -->
+            @if (submitError()) {
+              <div class="sell-car__error">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                </svg>
+                <span>{{ submitError() }}</span>
+              </div>
+            }
+
             <!-- Buttons -->
             <div class="sell-car__buttons">
-              <button type="button" (click)="onPrevStep()" class="sell-car__btn-back">
+              <button type="button" (click)="onPrevStep()" class="sell-car__btn-back" [disabled]="submitting()">
                 Atrás
               </button>
-              <button type="submit" class="sell-car__submit" [disabled]="vehicleForm.invalid">
-                Obtener Oferta
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
+              <button type="submit" class="sell-car__submit" [disabled]="vehicleForm.invalid || submitting()">
+                @if (submitting()) {
+                  <span class="sell-car__spinner" aria-hidden="true"></span>
+                  Enviando...
+                } @else {
+                  Obtener Oferta
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                }
               </button>
             </div>
 

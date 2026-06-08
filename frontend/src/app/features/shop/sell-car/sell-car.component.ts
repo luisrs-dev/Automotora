@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TasacionService } from '../../../core/services/tasacion.service';
 
 @Component({
   selector: 'app-sell-car',
@@ -11,8 +12,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sell-car.component.css',
 })
 export class SellCarComponent {
+  private tasacionService = inject(TasacionService);
+
   step = signal(1); // 1 = Personal Info, 2 = Vehicle Info, 3 = Success state
   loadingPatente = signal(false);
+  submitting = signal(false);
+  submitError = signal<string | null>(null);
 
   personalForm: FormGroup;
   vehicleForm: FormGroup;
@@ -208,8 +213,24 @@ export class SellCarComponent {
 
   onSubmit(): void {
     if (this.vehicleForm.valid && this.personalForm.valid) {
-      this.step.set(3);
-      // Future: send all data (personalForm + vehicleForm) to backend API
+      this.submitting.set(true);
+      this.submitError.set(null);
+
+      this.tasacionService
+        .enviarSolicitud(this.personalForm.value, this.vehicleForm.value)
+        .subscribe({
+          next: () => {
+            this.submitting.set(false);
+            this.step.set(3);
+          },
+          error: (err) => {
+            this.submitting.set(false);
+            console.error('Error al enviar solicitud:', err);
+            this.submitError.set(
+              'No pudimos enviar tu solicitud. Por favor intenta nuevamente.'
+            );
+          },
+        });
     } else {
       this.vehicleForm.markAllAsTouched();
     }
