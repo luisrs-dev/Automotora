@@ -480,6 +480,29 @@
   margin-top: 2px;
 }
 
+.partner-logo img {
+  max-width: 125px;
+  max-height: 44px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.partner-logo:hover img {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+:host-context(.dark) .partner-logo img {
+  opacity: 0.85;
+}
+
+:host-context(.dark) .partner-logo:hover img {
+  opacity: 1;
+}
+
 /* ════════════════════════════════════════════
    VALUE PROPOSITION CARDS
    ════════════════════════════════════════════ */

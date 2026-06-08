@@ -42,7 +42,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
     {
       id: 0,
       tag: '✦ Usados & Seminuevos · Talca',
-      headline: 'Tu Próximo Auto te Espera en Talca',
+      headline: 'Tu próximo auto te espera',
       subheadline:
         'Stock renovado, inspeccionado y listo para entrega inmediata.',
       cta: 'Ver Catálogo',
@@ -51,7 +51,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: 'https://wa.me/56979970545?text=Hola%2C%20me%20interesa%20ver%20el%20cat%C3%A1logo',
       gradient: 'linear-gradient(100deg, #0B1230 0%, #1B2D6B 55%, rgba(11,18,48,0.4) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: '/slide-home.webp', // Local hero image
+      imageUrl: '/slide1-joseluisjara.svg', // Local hero image
       stats: [
         { value: '+20', label: 'Años de experiencia' },
         { value: '2', label: 'Sucursales' },
@@ -63,7 +63,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
     {
       id: 1,
       tag: '✦ Tasación sin costo · Respuesta inmediata',
-      headline: 'Compramos tu Auto o lo Recibimos a Cuenta',
+      headline: 'Compramos tu auto',
       subheadline:
         'Tasación gratuita y sin compromiso. Te pagamos el mejor precio del mercado.',
       cta: 'Tasar mi Auto',
@@ -72,7 +72,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#',
       gradient: 'linear-gradient(100deg, #071525 0%, #0e2a4a 55%, rgba(7,21,37,0.35) 100%)',
       accentColor: '#5AAFD8',
-      imageUrl: '/slide1.webp', // Local hero image
+      imageUrl: '/slide2-joseluisjara.svg', // Local hero image
       stats: [
         { value: '24 hrs', label: 'Respuesta' },
         { value: '$0', label: 'Costo tasación' },
@@ -84,7 +84,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
     {
       id: 2,
       tag: '✦ Crédito Tradicional & Express',
-      headline: 'Financiamiento Aprobado en 24 Horas',
+      headline: 'Financiamiento 24 Horas',
       subheadline:
         'Solo con tu carnet. Trabajamos con Santander, BancoEstado, Falabella y más.',
       cta: 'Consultar ahora',
@@ -93,7 +93,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#catalogo',
       gradient: 'linear-gradient(100deg, #060f1e 0%, #122040 55%, rgba(6,15,30,0.35) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: '/slide-financiar.webp', // Local hero image
+      imageUrl: '/slide3-joseluisjara.svg', // Local hero image
       stats: [
         { value: '24 hrs', label: 'Aprobación' },
         { value: '+5', label: 'Instituciones' },
