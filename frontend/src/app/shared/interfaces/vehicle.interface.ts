@@ -21,4 +21,8 @@ export interface Vehicle {
   visits?: number;
   features?: string[];
   images?: string[];
+  promocion?: boolean;
+  pocosKilometros?: boolean;
+  reservado?: boolean;
+  atributos?: string[];
 }

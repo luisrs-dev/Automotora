@@ -61,43 +61,48 @@ export class InventoryService {
 
   // ── RESOURCE: Cargamos los datos usando httpResource ───────
   // private vehiclesResource = httpResource<any>(`${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`);
-  private vehiclesResource = httpResource<any>(
-    `${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`
-  );
+  // private vehiclesResource = httpResource<any>(
+  //   `${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`
+  // );
+
+  private vehiclesResource = httpResource<any>(() => {
+    const timestamp = new Date().getTime();
+    return `${this.API_BASE_URL}items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id&_ts=${timestamp}`;
+  });
 
   // ── STATE: Procesamos los datos con las URLs completas ─────
   private vehiclesSignal = computed<Vehicle[]>(() => {
     const res = this.vehiclesResource.value();
-    
+
     if (res && res.data) {
       const mappedVehicles = res.data.map((item: any) => this.mapApiToVehicle(item));
-      console.log('[mappedVehicles]',mappedVehicles);
+      console.log('[mappedVehicles]', mappedVehicles);
       return mappedVehicles;
     }
-    
+
     // Fallback a mock data si hay error
     if (this.vehiclesResource.error()) {
       console.error('Error fetching vehicles, falling back to mock data:', this.vehiclesResource.error());
       return this.initialVehicles;
     }
-    
+
     return [];
   });
 
   private mapApiToVehicle(item: any): Vehicle {
     // Manejo de Marca y Modelo (con fallback si son null)
-    console.log('[item]',item);
+    console.log('[item]', item);
     const brand = item.marca?.Nombre || 'Desconocida';
     const model = item.modelo?.Nombre || 'Modelo no especificado';
 
     // Procesamiento de Imágenes: Convertimos el array de IDs [1, 2, 3] en URLs completas
-    const galleryUrls = (item.imagenes || []).map((img: any) => 
+    const galleryUrls = (item.imagenes || []).map((img: any) =>
       `${this.ASSETS_URL}/${img.directus_files_id}`
     );
 
     // Usamos la primera imagen como principal, o un placeholder si no hay
-    const mainImageUrl = galleryUrls.length > 0 
-      ? galleryUrls[0] 
+    const mainImageUrl = galleryUrls.length > 0
+      ? galleryUrls[0]
       : 'https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&q=80&w=1200';
 
     // Manejo de Transmisión
@@ -107,7 +112,7 @@ export class InventoryService {
     // Manejo de Status basado en el JSON recibido
     let status: 'Disponible' | 'Reservado' | 'Vendido' = 'Disponible';
     if (item.status === 'archived' || item.status === 'vendido') status = 'Vendido';
-    if (item.status === 'draft') status = 'Reservado';
+    if (item.status === 'draft' || item.reservado === true) status = 'Reservado';
 
     return {
       id: String(item.id),
@@ -117,15 +122,19 @@ export class InventoryService {
       price: item.Precio || 0,
       priceCurrency: 'CLP',
       status,
-      bodyType: 'Sedan', 
+      bodyType: 'Sedan',
       mileage: item.Kilometraje || 0,
       transmission,
       fuel: 'Gasolina',
-      imageUrl: mainImageUrl, 
+      imageUrl: mainImageUrl,
       images: galleryUrls,
       description: item.Titulo || 'Sin descripción',
       cylinderCapacity: item.Cilindrada || 'N/A',
-      
+      features: item.atributos || [],
+      promocion: !!item.promocion,
+      pocosKilometros: !!item.pocos_kilometros,
+      reservado: !!item.reservado,
+      atributos: item.atributos || []
     };
   }
 
@@ -137,21 +146,21 @@ export class InventoryService {
     return this.vehiclesSignal().find((v: Vehicle) => v.id === id);
   }
 
-  filterBrand    = signal<string>('Todas');
-  filterModel    = signal<string>('Todos');
+  filterBrand = signal<string>('Todas');
+  filterModel = signal<string>('Todos');
   filterBodyType = signal<string>('Todos');
-  filterYear     = signal<number>(0);        // 0 = todos los años
+  filterYear = signal<number>(0);        // 0 = todos los años
   filterMinPrice = signal<number>(0);
   filterMaxPrice = signal<number>(50000000);
 
   // ── COMPUTED: Vehículos filtrados ──────────────────────────
   filteredVehicles = computed(() => {
     return this.vehiclesSignal().filter((v: Vehicle) => {
-      const matchBrand    = this.filterBrand()    === 'Todas' || v.brand    === this.filterBrand();
-      const matchModel    = this.filterModel()    === 'Todos' || v.model    === this.filterModel();
+      const matchBrand = this.filterBrand() === 'Todas' || v.brand === this.filterBrand();
+      const matchModel = this.filterModel() === 'Todos' || v.model === this.filterModel();
       const matchBodyType = this.filterBodyType() === 'Todos' || v.bodyType === this.filterBodyType();
-      const matchYear     = this.filterYear()     === 0       || v.year     === this.filterYear();
-      const matchPrice    = v.price >= this.filterMinPrice() && v.price <= this.filterMaxPrice();
+      const matchYear = this.filterYear() === 0 || v.year === this.filterYear();
+      const matchPrice = v.price >= this.filterMinPrice() && v.price <= this.filterMaxPrice();
       return matchBrand && matchModel && matchBodyType && matchYear && matchPrice;
     });
   });
