@@ -15,7 +15,6 @@ export class SellCarComponent {
   private tasacionService = inject(TasacionService);
 
   step = signal(1); // 1 = Personal Info, 2 = Vehicle Info, 3 = Success state
-  loadingPatente = signal(false);
   submitting = signal(false);
   submitError = signal<string | null>(null);
 
@@ -31,17 +30,6 @@ export class SellCarComponent {
     '1.3T CVT Elite',
     '2.0 GL MT'
   ];
-
-  // Database of mock vehicles to simulate real search by ending digits
-  private mockVehiclesDb = [
-    { marca: 'Hyundai', modelo: 'Tucson', anio: 2020, version: '2.0 AT Premium' },
-    { marca: 'Chevrolet', modelo: 'Spin', anio: 2022, version: '1.6 MT Comfort' },
-    { marca: 'Toyota', modelo: 'RAV4', anio: 2019, version: '2.0 GL MT' },
-    { marca: 'Suzuki', modelo: 'Swift', anio: 2021, version: '1.3T CVT Elite' },
-    { marca: 'Mazda', modelo: 'CX-5', anio: 2018, version: '2.0 AT Premium' }
-  ];
-
-  loadingMessage = signal('Iniciando búsqueda...');
 
   constructor(private fb: FormBuilder) {
     this.personalForm = this.fb.group({
@@ -64,54 +52,6 @@ export class SellCarComponent {
     });
   }
 
-  /** Simulate fetching vehicle data by license plate when focus is lost (blur) */
-  onPatenteBlur(): void {
-    const patenteControl = this.vehicleForm.get('patente');
-    if (!patenteControl || patenteControl.invalid || this.loadingPatente()) return;
-
-    const patenteValue = patenteControl.value.replace(/[^a-zA-Z0-9]/g, '');
-    if (patenteValue.length < 6) return;
-
-    this.loadingPatente.set(true);
-    this.loadingMessage.set('Conectando con base de datos Registro Civil...');
-
-    // Step 2 message at 800ms
-    setTimeout(() => {
-      this.loadingMessage.set(`Buscando patente ${patenteControl.value}...`);
-    }, 800);
-
-    // Step 3 message at 1600ms
-    setTimeout(() => {
-      this.loadingMessage.set('Decodificando marca, modelo y año...');
-    }, 1600);
-
-    // Final resolution at 2500ms
-    setTimeout(() => {
-      // Pick a vehicle based on the last char of patente to make it dynamic
-      const lastChar = patenteValue.charCodeAt(patenteValue.length - 1) || 0;
-      const mockCarIndex = lastChar % this.mockVehiclesDb.length;
-      const carData = this.mockVehiclesDb[mockCarIndex];
-
-      // Auto populate form
-      this.vehicleForm.patchValue({
-        marca: carData.marca,
-        modelo: carData.modelo,
-        anio: carData.anio,
-        version: carData.version
-      });
-
-      // Mark auto populated fields as dirty/touched to trigger success validations automatically
-      ['marca', 'modelo', 'anio', 'version'].forEach(field => {
-        const control = this.vehicleForm.get(field);
-        if (control) {
-          control.markAsDirty();
-          control.markAsTouched();
-        }
-      });
-
-      this.loadingPatente.set(false);
-    }, 2500);
-  }
 
   /** Format RUT as user types: 12.345.678-9 */
   formatRut(event: Event): void {
