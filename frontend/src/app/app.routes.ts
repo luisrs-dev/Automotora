@@ -4,6 +4,7 @@ import { VehicleDetailComponent } from './features/shop/vehicle-detail/vehicle-d
 import { SellCarComponent } from './features/shop/sell-car/sell-car.component';
 import { ContactoComponent } from './features/shop/contacto/contacto.component';
 import { EmpresaComponent } from './features/shop/empresa/empresa.component';
+import { FinanciamientoComponent } from './features/shop/financiamiento/financiamiento.component';
 import { UnderConstructionComponent } from './features/under-construction/under-construction.component';
 import { MainLayoutComponent } from './shared/ui/main-layout/main-layout.component';
 
@@ -40,6 +41,11 @@ export const routes: Routes = [
         path: 'empresa',
         component: EmpresaComponent,
         title: 'Empresa - Automotora José Luis Jara'
+      },
+      {
+        path: 'financiamiento',
+        component: FinanciamientoComponent,
+        title: 'Financiamiento - Automotora José Luis Jara'
       }
     ]
   },
