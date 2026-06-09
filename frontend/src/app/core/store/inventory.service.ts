@@ -89,6 +89,20 @@ export class InventoryService {
     return [];
   });
 
+  private translateAtributo(key: string): string {
+    if (!key) return '';
+    const dictionary: Record<string, string> = {
+      'unico-duenio': 'Único dueño',
+      'manutenciones-al-dia': 'Mantenciones al día',
+      'oferta': 'Oferta',
+      'reservado': 'Reservado',
+      '2-llaves': '2 llaves',
+      'recibe-vehiculo': 'Recibe vehículo',
+      'hibrido': 'Híbrido'
+    };
+    return dictionary[key] || key.replace(/[-_]/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
+  }
+
   private mapApiToVehicle(item: any): Vehicle {
     // Manejo de Marca y Modelo (con fallback si son null)
     console.log('[item]', item);
@@ -114,6 +128,8 @@ export class InventoryService {
     if (item.status === 'archived' || item.status === 'vendido') status = 'Vendido';
     if (item.status === 'draft' || item.reservado === true) status = 'Reservado';
 
+    const mappedAtributos = (item.atributos || []).map((attr: string) => this.translateAtributo(attr));
+
     return {
       id: String(item.id),
       brand,
@@ -130,11 +146,11 @@ export class InventoryService {
       images: galleryUrls,
       description: item.Titulo || 'Sin descripción',
       cylinderCapacity: item.Cilindrada || 'N/A',
-      features: item.atributos || [],
+      features: mappedAtributos,
       promocion: !!item.promocion,
       pocosKilometros: !!item.pocos_kilometros,
       reservado: !!item.reservado,
-      atributos: item.atributos || []
+      atributos: mappedAtributos
     };
   }
 
