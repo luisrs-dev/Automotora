@@ -3,6 +3,7 @@ import { CatalogComponent } from './features/shop/catalog/catalog.component';
 import { VehicleDetailComponent } from './features/shop/vehicle-detail/vehicle-detail.component';
 import { SellCarComponent } from './features/shop/sell-car/sell-car.component';
 import { ContactoComponent } from './features/shop/contacto/contacto.component';
+import { EmpresaComponent } from './features/shop/empresa/empresa.component';
 import { UnderConstructionComponent } from './features/under-construction/under-construction.component';
 import { MainLayoutComponent } from './shared/ui/main-layout/main-layout.component';
 
@@ -34,6 +35,11 @@ export const routes: Routes = [
         path: 'contacto',
         component: ContactoComponent,
         title: 'Contacto - Automotora José Luis Jara'
+      },
+      {
+        path: 'empresa',
+        component: EmpresaComponent,
+        title: 'Empresa - Automotora José Luis Jara'
       }
     ]
   },

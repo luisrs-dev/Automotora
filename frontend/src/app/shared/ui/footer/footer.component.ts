@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css'],
 })
@@ -25,13 +26,12 @@ export class FooterComponent {
   ];
 
   readonly navLinks = [
-    { label: 'Inicio',           href: '#' },
-    { label: 'Empresa',          href: '#' },
-    { label: 'Sucursales',       href: '#' },
-    { label: 'Financiamiento',   href: '#' },
-    { label: 'Recibimos tu auto',href: '#' },
-    { label: 'Catálogo',         href: '#catalogo' },
-    { label: 'Contacto',         href: '#' },
+    { label: 'Inicio',             routerLink: '/joseluisjara' },
+    { label: 'Empresa',            routerLink: '/joseluisjara/empresa' },
+    { label: 'Financiamiento',     href: '#' },
+    { label: 'Compramos tu auto',  routerLink: '/joseluisjara/compramos-tu-auto' },
+    { label: 'Catálogo',           routerLink: '/joseluisjara' },
+    { label: 'Contacto',           routerLink: '/joseluisjara/contacto' },
   ];
 
   openWhatsApp(): void {
