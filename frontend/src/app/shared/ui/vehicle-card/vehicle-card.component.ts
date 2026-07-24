@@ -13,6 +13,17 @@ import { RouterLink } from '@angular/router';
 export class VehicleCardComponent {
   @Input({ required: true }) vehicle!: Vehicle;
 
+  get tractionType(): string {
+    const text = `${this.vehicle.description || ''} ${this.vehicle.brand || ''} ${this.vehicle.model || ''}`.toLowerCase();
+    if (text.includes('4x4') || text.includes('4wd') || text.includes('tracción 4x4') || text.includes('traction 4x4')) {
+      return '4X4';
+    }
+    if (text.includes('awd') || text.includes('all-wheel') || text.includes('all wheel') || text.includes('tracción integral') || text.includes('4matic') || text.includes('quattro')) {
+      return 'AWD';
+    }
+    return '';
+  }
+
   contactWhatsApp() {
     // Simulación del click del usuario hacia WhatsApp
     const msg = `Hola Automotora JARA, estoy muy interesado en el ${this.vehicle.brand} ${this.vehicle.model} de ${this.vehicle.year}. ¿Sigue disponible?`;

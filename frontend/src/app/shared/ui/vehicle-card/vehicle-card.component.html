@@ -15,21 +15,21 @@
 
     <!-- Dynamic badges based on provided reference image -->
     <div class="vc__badges">
-      @if (vehicle.status === 'Reservado') {
-        <span class="vc__badge vc__badge--reserved">Reservado</span>
-      } @else {
-        @if (vehicle.price < 9000000) {
+      @if (vehicle.mileage < 50000) {
           <span class="vc__badge vc__badge--promo">
-            <span class="vc__badge-icon">$</span> PROMO
-          </span>
-        }
-        @if (vehicle.mileage < 50000) {
-          <span class="vc__badge vc__badge--low-km">
             <svg class="vc__badge-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             Pocos Kilómetros
           </span>
         }
-      }
+      <!-- @if (vehicle.status === 'Reservado') {
+        <span class="vc__badge vc__badge--reserved">Reservado</span>
+      } @else { -->
+        <!-- @if (vehicle.price < 9000000) {
+          <span class="vc__badge vc__badge--promo">
+            <span class="vc__badge-icon">$</span> PROMO
+          </span>
+        } -->
+        
     </div>
 
     <!-- Hot flame icon top right if mileage is low or promo active -->
@@ -43,9 +43,9 @@
     }
 
     <!-- Reserved visual dim overlay -->
-    @if (vehicle.status === 'Reservado') {
-      <div class="vc__reserved-overlay"></div>
-    }
+      <!-- @if (vehicle.status === 'Reservado') {
+        <div class="vc__reserved-overlay"></div>
+      } -->
   </div>
 
   <!-- ══ BODY ══ -->

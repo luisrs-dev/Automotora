@@ -198,14 +198,14 @@
             </div>
 
             <!-- Checkbox -->
-            <label class="sell-car__checkbox" for="sell-accept-1">
+            <!-- <label class="sell-car__checkbox" for="sell-accept-1">
               <input id="sell-accept-1" type="checkbox" formControlName="acceptComms" />
               <span class="sell-car__checkbox-mark"></span>
               <span class="sell-car__checkbox-text">
                 Acepto recibir comunicaciones de Automotora José Luis Jara.
                 <a href="#" class="sell-car__privacy-link">Revisa nuestra Política de privacidad.</a>
               </span>
-            </label>
+            </label> -->
 
             <!-- Submit -->
             <button type="submit" class="sell-car__submit" [disabled]="personalForm.invalid">
@@ -305,15 +305,17 @@
             <div class="sell-car__field" [class.sell-car__field--valid]="isVehicleFieldValid('version')" [class.sell-car__field--invalid]="isVehicleFieldInvalid('version')">
               <label class="sell-car__label" for="sell-version">Versión</label>
               <div class="sell-car__input-wrapper">
-                <select id="sell-version" class="sell-car__input sell-car__select" formControlName="version">
-                  <option value="" disabled selected hidden>Versión</option>
-                  @for (v of versionsList; track v) {
-                    <option [value]="v">{{ v }}</option>
-                  }
-                </select>
-                <div class="sell-car__select-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
-                </div>
+                <input
+                  id="sell-version"
+                  type="text"
+                  class="sell-car__input"
+                  formControlName="version"
+                  placeholder="Versión"
+                  autocomplete="off"
+                />
+                @if (isVehicleFieldValid('version')) {
+                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                }
               </div>
             </div>
 

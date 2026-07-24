@@ -123,6 +123,19 @@ export class InventoryService {
     let transmission: 'Manual' | 'Automático' = 'Manual';
     if (item.Transmision?.toLowerCase().includes('auto')) transmission = 'Automático';
 
+    // Manejo de Carroceria
+    let bodyType: 'SUV' | 'Sedan' | 'Deportivo' | 'Pickup' = 'Sedan';
+    const apiCarroceria = (item.Carroceria || '').toLowerCase();
+    if (apiCarroceria.includes('suv')) {
+      bodyType = 'SUV';
+    } else if (apiCarroceria.includes('sedan')) {
+      bodyType = 'Sedan';
+    } else if (apiCarroceria.includes('deport') || apiCarroceria.includes('coup')) {
+      bodyType = 'Deportivo';
+    } else if (apiCarroceria.includes('pick') || apiCarroceria.includes('camionet') || apiCarroceria.includes('cabina') || apiCarroceria.includes('l200')) {
+      bodyType = 'Pickup';
+    }
+
     // Manejo de Status basado en el JSON recibido
     let status: 'Disponible' | 'Reservado' | 'Vendido' = 'Disponible';
     if (item.status === 'archived' || item.status === 'vendido') status = 'Vendido';
@@ -138,7 +151,7 @@ export class InventoryService {
       price: item.Precio || 0,
       priceCurrency: 'CLP',
       status,
-      bodyType: 'Sedan',
+      bodyType,
       mileage: item.Kilometraje || 0,
       transmission,
       fuel: 'Gasolina',

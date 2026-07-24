@@ -21,23 +21,13 @@ export class SellCarComponent {
   personalForm: FormGroup;
   vehicleForm: FormGroup;
 
-  // Mock versions list for version dropdown
-  versionsList = [
-    '1.6 MT Comfort',
-    '1.6 AT Deluxe',
-    '2.0 AT Premium',
-    '1.5T DCT Luxury',
-    '1.3T CVT Elite',
-    '2.0 GL MT'
-  ];
-
   constructor(private fb: FormBuilder) {
     this.personalForm = this.fb.group({
       rut: ['', [Validators.required, Validators.minLength(11)]],
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, Validators.minLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
-      celular: ['', [Validators.required, Validators.minLength(9)]],
+      celular: ['', [Validators.required, Validators.pattern(/^\+56\s9\s\d{4}\s\d{4}$/)]],
       acceptComms: [false],
     });
 
@@ -83,19 +73,39 @@ export class SellCarComponent {
   /** Format phone as user types: +56 9 XXXX XXXX */
   formatPhone(event: Event): void {
     const input = event.target as HTMLInputElement;
-    let value = input.value.replace(/[^0-9+]/g, '');
+    let value = input.value;
 
-    // If user starts typing without +56, prepend it
-    if (value && !value.startsWith('+')) {
-      if (value.startsWith('56')) {
-        value = '+' + value;
-      } else if (value.startsWith('9')) {
-        value = '+56 ' + value;
-      }
+    if (!value) {
+      this.personalForm.get('celular')?.setValue('', { emitEvent: false });
+      return;
     }
 
-    input.value = value;
-    this.personalForm.get('celular')?.setValue(value, { emitEvent: false });
+    // Enforce +56 9 prefix
+    if (!value.startsWith('+56 9')) {
+      let cleaned = value.replace(/\D/g, '');
+      if (cleaned.startsWith('569')) {
+        cleaned = cleaned.slice(3);
+      } else if (cleaned.startsWith('56')) {
+        cleaned = cleaned.slice(2);
+      } else if (cleaned.startsWith('9')) {
+        cleaned = cleaned.slice(1);
+      }
+      value = '+56 9' + cleaned;
+    }
+
+    const prefix = '+56 9';
+    const rest = value.slice(prefix.length).replace(/\D/g, '').slice(0, 8);
+
+    let formatted = prefix;
+    if (rest.length > 0) {
+      formatted += ' ' + rest.slice(0, 4);
+    }
+    if (rest.length > 4) {
+      formatted += ' ' + rest.slice(4, 8);
+    }
+
+    input.value = formatted;
+    this.personalForm.get('celular')?.setValue(formatted, { emitEvent: false });
   }
 
   /** Format Patente as user types: AA-AA-AA or AA-BB-11 */
