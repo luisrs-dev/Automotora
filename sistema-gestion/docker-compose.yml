@@ -1,0 +1,29 @@
+services:
+  directus:
+    image: directus/directus:11.17.4
+    container_name: directus-sistema-gestion
+    ports:
+      - "8055:8055"
+    volumes:
+      - ./database:/directus/database
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+    environment:
+      # Llaves de seguridad para encriptar sesiones (Usa textos largos y aleatorios)
+      KEY: "ingresa-aqui-una-clave-muy-larga-y-aleatoria"
+      SECRET: "ingresa-aqui-otra-clave-muy-larga-y-aleatoria"
+      
+      # Configuración de Base de Datos local usando SQLite
+      DB_CLIENT: "sqlite3"
+      DB_FILENAME: "./database/data.db"
+      
+      # Datos de acceso para tu primer usuario Administrador
+      ADMIN_EMAIL: "admin@joseluisjara.cl"
+      ADMIN_PASSWORD: "j0s3lu1sj4r4@w3bs1t3"
+
+      # DESACTIVAR CACHÉ (Evita que la API devuelva datos obsoletos en desarrollo)
+      CACHE_ENABLED: "false"
+      # CONFIGURACIÓN DE CORS
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "http://31.97.9.216"
+    restart: always
