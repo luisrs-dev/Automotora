@@ -26,4 +26,13 @@ services:
       # CONFIGURACIÓN DE CORS
       CORS_ENABLED: "true"
       CORS_ORIGIN: "http://31.97.9.216"
+
+
+      # ✉️ CONFIGURACIÓN DE CORREO SMTP
+      EMAIL_TRANSPORT: "smtp"
+      EMAIL_SMTP_HOST: "smtp.gmail.com"
+      EMAIL_SMTP_PORT: "587"
+      EMAIL_SMTP_USER: "reyes.silva.luis@gmail.com"
+      EMAIL_SMTP_PASSWORD: "wjuz kmrn lcby pqac"
+      EMAIL_FROM: "reyes.silva.luis@gmail.com"
     restart: always
