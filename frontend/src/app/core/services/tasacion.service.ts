@@ -32,7 +32,9 @@ export class TasacionService {
       nombre: personalData.nombre,
       apellido: personalData.apellido,
       correo: personalData.correo,
-      celular: personalData.celular,
+      celular: personalData.celular.startsWith('+56')
+        ? personalData.celular
+        : `+56 9 ${personalData.celular}`,
       patente: vehicleData.patente,
       anio: vehicleData.anio,
       marca: vehicleData.marca,

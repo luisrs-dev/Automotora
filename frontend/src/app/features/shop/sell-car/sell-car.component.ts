@@ -27,7 +27,7 @@ export class SellCarComponent {
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       apellido: ['', [Validators.required, Validators.minLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
-      celular: ['', [Validators.required, Validators.pattern(/^\+56\s9\s\d{4}\s\d{4}$/)]],
+      celular: ['', [Validators.required, Validators.pattern(/^\d{4}\s?\d{4}$/)]],
       acceptComms: [false],
     });
 
@@ -70,38 +70,14 @@ export class SellCarComponent {
     this.personalForm.get('rut')?.setValue(value, { emitEvent: false });
   }
 
-  /** Format phone as user types: +56 9 XXXX XXXX */
+  /** Format phone as user types 8 digits: XXXX XXXX */
   formatPhone(event: Event): void {
     const input = event.target as HTMLInputElement;
-    let value = input.value;
+    const digitsOnly = input.value.replace(/\D/g, '').slice(0, 8);
 
-    if (!value) {
-      this.personalForm.get('celular')?.setValue('', { emitEvent: false });
-      return;
-    }
-
-    // Enforce +56 9 prefix
-    if (!value.startsWith('+56 9')) {
-      let cleaned = value.replace(/\D/g, '');
-      if (cleaned.startsWith('569')) {
-        cleaned = cleaned.slice(3);
-      } else if (cleaned.startsWith('56')) {
-        cleaned = cleaned.slice(2);
-      } else if (cleaned.startsWith('9')) {
-        cleaned = cleaned.slice(1);
-      }
-      value = '+56 9' + cleaned;
-    }
-
-    const prefix = '+56 9';
-    const rest = value.slice(prefix.length).replace(/\D/g, '').slice(0, 8);
-
-    let formatted = prefix;
-    if (rest.length > 0) {
-      formatted += ' ' + rest.slice(0, 4);
-    }
-    if (rest.length > 4) {
-      formatted += ' ' + rest.slice(4, 8);
+    let formatted = digitsOnly;
+    if (digitsOnly.length > 4) {
+      formatted = `${digitsOnly.slice(0, 4)} ${digitsOnly.slice(4)}`;
     }
 
     input.value = formatted;

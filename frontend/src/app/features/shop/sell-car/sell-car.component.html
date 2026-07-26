@@ -182,14 +182,16 @@
             <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('celular')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('celular')">
               <label class="sell-car__label" for="sell-celular">Celular</label>
               <div class="sell-car__input-wrapper">
+                <span class="sell-car__input-prefix">+56 9</span>
                 <input
                   id="sell-celular"
                   type="tel"
-                  class="sell-car__input"
+                  class="sell-car__input sell-car__input--with-prefix"
                   formControlName="celular"
-                  placeholder="+56 9 1234 5678"
+                  placeholder="1234 5678"
                   (input)="formatPhone($event)"
-                  autocomplete="tel"
+                  maxlength="9"
+                  autocomplete="tel-national"
                 />
                 @if (isPersonalFieldValid('celular')) {
                   <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
