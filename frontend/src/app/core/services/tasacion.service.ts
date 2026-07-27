@@ -14,6 +14,7 @@ export interface SolicitudTasacion {
   modelo: string;
   version: string;
   kilometraje: number;
+  status?: string;
 }
 
 @Injectable({
@@ -41,6 +42,7 @@ export class TasacionService {
       modelo: vehicleData.modelo,
       version: vehicleData.version,
       kilometraje: vehicleData.kilometraje,
+      status: 'nuevo',
     };
 
     return this.http.post(`${this.API_BASE_URL}/items/solicitud_tasacion`, payload);
