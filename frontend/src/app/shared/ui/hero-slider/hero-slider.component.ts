@@ -51,7 +51,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '/joseluisjara/empresa',
       gradient: 'linear-gradient(100deg, #0d0a1a 0%, #1a0d2e 40%, #2d0a14 100%)',
       accentColor: '#e63946',
-      imageUrl: '/slide1-joseluisjara.svg',
+      imageUrl: '/slide-home.webp',
       stats: [
         { value: '1990', label: 'Año de fundación', icon: 'calendar' },
         { value: '+36 años', label: 'De trayectoria', icon: 'shield' },
@@ -72,7 +72,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: 'https://wa.me/56979970545?text=Hola%2C%20me%20interesa%20ver%20el%20cat%C3%A1logo',
       gradient: 'linear-gradient(100deg, #0B1230 0%, #1B2D6B 55%, rgba(11,18,48,0.4) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: '/slide1-joseluisjara.svg',
+      imageUrl: '/slide1.webp',
       stats: [
         { value: '1990', label: 'Fundados en Talca' },
         { value: '2', label: 'Sucursales' },
@@ -93,7 +93,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#',
       gradient: 'linear-gradient(100deg, #071525 0%, #0e2a4a 55%, rgba(7,21,37,0.35) 100%)',
       accentColor: '#5AAFD8',
-      imageUrl: '/slide2-joseluisjara.svg',
+      imageUrl: '/slide-home.webp',
       stats: [
         { value: '24 hrs', label: 'Respuesta' },
         { value: '$0', label: 'Costo tasación' },
@@ -114,7 +114,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#catalogo',
       gradient: 'linear-gradient(100deg, #060f1e 0%, #122040 55%, rgba(6,15,30,0.35) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: '/slide3-joseluisjara.svg',
+      imageUrl: '/slide-financiar.webp',
       stats: [
         { value: '24 hrs', label: 'Aprobación' },
         { value: '+5', label: 'Instituciones' },
