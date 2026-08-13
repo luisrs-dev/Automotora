@@ -15,6 +15,7 @@
           "options": {
             "outputPath": "dist/frontend",
             "index": "src/index.html",
+            "baseHref": "/joseluisjara/",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
