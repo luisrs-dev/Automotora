@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { InventoryService } from '../../../core/store/inventory.service';
@@ -18,6 +18,7 @@ export class VehicleDetailComponent implements OnInit {
   
   vehicle = signal<Vehicle | undefined>(undefined);
   activeImage = signal<string>('');
+  lightboxOpen = signal<boolean>(false);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -34,8 +35,22 @@ export class VehicleDetailComponent implements OnInit {
     this.activeImage.set(url);
   }
 
+  openLightbox(): void {
+    this.lightboxOpen.set(true);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.lightboxOpen.set(false);
+    document.body.style.overflow = '';
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.lightboxOpen()) this.closeLightbox();
+  }
+
   onContactSubmit(): void {
-    // Logic for form submission
     alert('Mensaje enviado con éxito. El vendedor se pondrá en contacto pronto.');
   }
 

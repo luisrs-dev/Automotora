@@ -275,3 +275,52 @@
 :host-context(.dark) .vc__bonus-tag {
   color: #94a3b8;
 }
+
+/* ── CTA Button ── */
+.vc__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0.6rem;
+  background: #3B96C8;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 12px rgba(59, 150, 200, 0.35);
+}
+
+.vc__cta:hover {
+  background: #2d7fad;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 150, 200, 0.5);
+}
+
+.vc__cta:active {
+  transform: scale(0.97);
+}
+
+.vc__cta-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.vc__cta:hover .vc__cta-icon {
+  transform: translateX(3px);
+}
+
+:host-context(.dark) .vc__cta {
+  background: #3B96C8;
+  box-shadow: 0 3px 14px rgba(59, 150, 200, 0.25);
+}
+
+:host-context(.dark) .vc__cta:hover {
+  background: #2d7fad;
+}

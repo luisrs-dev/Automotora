@@ -22,7 +22,7 @@ export interface SliderSlide {
   gradient: string;
   accentColor: string;
   imageUrl: string;
-  stats?: { value: string; label: string }[];
+  stats?: { value: string; label: string; icon?: string }[];
 }
 
 @Component({
@@ -38,9 +38,30 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
   private intervalId?: ReturnType<typeof setInterval>;
 
   readonly slides: SliderSlide[] = [
-    // ── Slide 1: Comprar un vehículo ─────────────────────────
+    // ── Slide 0: Pioneros desde 1990 ─────────────────────────
     {
       id: 0,
+      tag: '⭐ Pioneros en Talca · Desde 1990',
+      headline: 'Pioneros en Talca',
+      subheadline:
+        'Más de 36 años acompañando a conductores\nde Talca y la Región del Maule.',
+      cta: 'Ver catálogo de vehículos',
+      ctaHref: '#catalogo',
+      ctaSecondary: 'Conoce nuestra historia →',
+      ctaSecondaryHref: '/joseluisjara/empresa',
+      gradient: 'linear-gradient(100deg, #0d0a1a 0%, #1a0d2e 40%, #2d0a14 100%)',
+      accentColor: '#e63946',
+      imageUrl: '/slide1-joseluisjara.svg',
+      stats: [
+        { value: '1990', label: 'Año de fundación', icon: 'calendar' },
+        { value: '+36 años', label: 'De trayectoria', icon: 'shield' },
+        { value: 'Talca', label: 'Región del Maule', icon: 'pin' },
+      ],
+    },
+
+    // ── Slide 1: Comprar un vehículo ─────────────────────────
+    {
+      id: 1,
       tag: '✦ Usados & Seminuevos · Talca',
       headline: 'Tu próximo auto te espera',
       subheadline:
@@ -51,9 +72,9 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: 'https://wa.me/56979970545?text=Hola%2C%20me%20interesa%20ver%20el%20cat%C3%A1logo',
       gradient: 'linear-gradient(100deg, #0B1230 0%, #1B2D6B 55%, rgba(11,18,48,0.4) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: '/slide1-joseluisjara.svg', // Local hero image
+      imageUrl: '/slide1-joseluisjara.svg',
       stats: [
-        { value: '+20', label: 'Años de experiencia' },
+        { value: '1990', label: 'Fundados en Talca' },
         { value: '2', label: 'Sucursales' },
         { value: '100%', label: 'Inspeccionados' },
       ],
@@ -61,7 +82,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
     // ── Slide 2: Vender / parte de pago ──────────────────────
     {
-      id: 1,
+      id: 2,
       tag: '✦ Tasación sin costo · Respuesta inmediata',
       headline: 'Compramos tu auto',
       subheadline:
@@ -72,7 +93,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#',
       gradient: 'linear-gradient(100deg, #071525 0%, #0e2a4a 55%, rgba(7,21,37,0.35) 100%)',
       accentColor: '#5AAFD8',
-      imageUrl: '/slide2-joseluisjara.svg', // Local hero image
+      imageUrl: '/slide2-joseluisjara.svg',
       stats: [
         { value: '24 hrs', label: 'Respuesta' },
         { value: '$0', label: 'Costo tasación' },
@@ -82,7 +103,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
     // ── Slide 3: Financiamiento ───────────────────────────────
     {
-      id: 2,
+      id: 3,
       tag: '✦ Crédito Tradicional & Express',
       headline: 'Financiamiento 24 Horas',
       subheadline:
@@ -93,7 +114,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
       ctaSecondaryHref: '#catalogo',
       gradient: 'linear-gradient(100deg, #060f1e 0%, #122040 55%, rgba(6,15,30,0.35) 100%)',
       accentColor: '#3B96C8',
-      imageUrl: '/slide3-joseluisjara.svg', // Local hero image
+      imageUrl: '/slide3-joseluisjara.svg',
       stats: [
         { value: '24 hrs', label: 'Aprobación' },
         { value: '+5', label: 'Instituciones' },
