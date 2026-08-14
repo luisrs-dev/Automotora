@@ -59,16 +59,13 @@ export class InventoryService {
     }
   ];
 
-  // ── RESOURCE: Cargamos los datos usando httpResource ───────
-  // private vehiclesResource = httpResource<any>(`${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`);
-  // private vehiclesResource = httpResource<any>(
-  //   `${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`
-  // );
+  // La URL debe ser estable para que SSR y el navegador compartan la misma
+  // respuesta durante la hidratación, sin volver a crear todo el catálogo.
+  private vehiclesResource = httpResource<any>(
+    () => `${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id`
+  );
 
-  private vehiclesResource = httpResource<any>(() => {
-    const timestamp = new Date().getTime();
-    return `${this.API_BASE_URL}/items/Auto?fields=*,marca.*,modelo.*,imagenes.directus_files_id&_ts=${timestamp}`;
-  });
+  readonly isLoading = computed(() => this.vehiclesResource.isLoading());
 
   // ── STATE: Procesamos los datos con las URLs completas ─────
   private vehiclesSignal = computed<Vehicle[]>(() => {

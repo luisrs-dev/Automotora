@@ -108,7 +108,26 @@
         }
       </div>
 
-      @if (store.filteredVehicles().length === 0) {
+      @if (store.isLoading()) {
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"
+        aria-label="Cargando vehículos"
+        aria-busy="true"
+      >
+        @for (placeholder of [1, 2, 3, 4, 5, 6, 7, 8]; track placeholder) {
+        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-surface-cardDark animate-pulse">
+          <div class="aspect-[4/3] bg-gray-200 dark:bg-gray-800"></div>
+          <div class="space-y-3 p-4">
+            <div class="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+            <div class="h-3 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
+            <div class="h-3 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+            <div class="h-7 w-2/3 rounded bg-gray-200 dark:bg-gray-700"></div>
+            <div class="h-10 w-full rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+          </div>
+        </div>
+        }
+      </div>
+      } @else if (store.filteredVehicles().length === 0) {
       <div class="bg-white dark:bg-surface-cardDark p-10 rounded-2xl text-center border border-gray-100 dark:border-surface-borderDark">
         <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
