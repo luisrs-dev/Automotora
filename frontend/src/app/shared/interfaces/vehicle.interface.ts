@@ -6,7 +6,7 @@ export interface Vehicle {
   price: number;
   priceCurrency: 'USD' | 'CLP';
   status: 'Disponible' | 'Reservado' | 'Vendido';
-  bodyType: 'SUV' | 'Sedan' | 'Deportivo' | 'Pickup';
+  bodyType: string;
   mileage: number;
   transmission: 'Manual' | 'Automático';
   fuel: 'Gasolina' | 'Diesel' | 'Híbrido' | 'Eléctrico';

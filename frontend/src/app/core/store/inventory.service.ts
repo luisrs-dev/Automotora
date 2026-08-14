@@ -103,6 +103,20 @@ export class InventoryService {
     return dictionary[key] || key.replace(/[-_]/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
   }
 
+  private formatBodyType(value: unknown): string {
+    const normalized = String(value ?? '')
+      .trim()
+      .replace(/[-_]+/g, ' ')
+      .replace(/\s+/g, ' ');
+
+    if (!normalized) return 'No especificada';
+    if (normalized.toLowerCase() === 'suv') return 'SUV';
+
+    return normalized
+      .toLocaleLowerCase('es-CL')
+      .replace(/\b\p{L}/gu, (letter) => letter.toLocaleUpperCase('es-CL'));
+  }
+
   private mapApiToVehicle(item: any): Vehicle {
     // Manejo de Marca y Modelo (con fallback si son null)
     console.log('[item]', item);
@@ -123,18 +137,9 @@ export class InventoryService {
     let transmission: 'Manual' | 'Automático' = 'Manual';
     if (item.Transmision?.toLowerCase().includes('auto')) transmission = 'Automático';
 
-    // Manejo de Carroceria
-    let bodyType: 'SUV' | 'Sedan' | 'Deportivo' | 'Pickup' = 'Sedan';
-    const apiCarroceria = (item.Carroceria || '').toLowerCase();
-    if (apiCarroceria.includes('suv')) {
-      bodyType = 'SUV';
-    } else if (apiCarroceria.includes('sedan')) {
-      bodyType = 'Sedan';
-    } else if (apiCarroceria.includes('deport') || apiCarroceria.includes('coup')) {
-      bodyType = 'Deportivo';
-    } else if (apiCarroceria.includes('pick') || apiCarroceria.includes('camionet') || apiCarroceria.includes('cabina') || apiCarroceria.includes('l200')) {
-      bodyType = 'Pickup';
-    }
+    // Directus entrega el valor configurado en el dropdown. Se formatea de
+    // manera genérica para admitir nuevas carrocerías sin cambiar este código.
+    const bodyType = this.formatBodyType(item.Carroceria);
 
     // Manejo de Status basado en el JSON recibido
     let status: 'Disponible' | 'Reservado' | 'Vendido' = 'Disponible';

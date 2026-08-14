@@ -205,3 +205,20 @@ La compilación generará:
 * **VPS Host**: Linux con Docker Compose.
 * **Puerto Backend**: `8055`
 * **Puerto Frontend Dev**: `4200`
+
+---
+
+## 📷 Descarga de imágenes de vehículos
+
+El scraper recorre las fichas públicas de `joseluisjara.cl` y descarga la galería
+de cada vehículo en una carpeta con su título dentro de `Vehiculos/`.
+
+Requiere Node.js 18 o superior y no necesita instalar dependencias:
+
+```bash
+node scripts/scrape-vehicle-images.mjs
+```
+
+Los archivos existentes no se sobrescriben. Si dos vehículos tienen el mismo
+título, la segunda carpeta incorpora el identificador de la ficha para evitar
+mezclar sus imágenes.
