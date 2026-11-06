@@ -25,7 +25,6 @@ export class SellCarComponent {
     this.personalForm = this.fb.group({
       rut: ['', [Validators.required, Validators.minLength(11)]],
       nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
       celular: ['', [Validators.required, Validators.pattern(/^\d{4}\s?\d{4}$/)]],
       acceptComms: [false],

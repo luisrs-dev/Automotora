@@ -18,6 +18,9 @@ export class ContactoService {
   private http = inject(HttpClient);
 
   enviarMensaje(data: MensajeContacto): Observable<any> {
-    return this.http.post(`${this.API_BASE_URL}/items/mensaje_contacto`, data);
+    return this.http.post(`${this.API_BASE_URL}/items/mensaje_contacto`, {
+      ...data,
+      celular: `+56 9 ${data.celular}`,
+    });
   }
 }

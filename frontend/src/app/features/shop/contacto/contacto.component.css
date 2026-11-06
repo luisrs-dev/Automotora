@@ -898,3 +898,38 @@
     padding: 0.9rem 1.5rem;
   }
 }
+
+.contacto__input.contacto__input--with-prefix {
+  padding-left: 4.8rem !important;
+}
+
+.contacto__input-prefix {
+  position: absolute;
+  left: 0.85rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #192a56;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1;
+}
+
+.contacto__input-prefix::after {
+  content: "";
+  display: inline-block;
+  height: 1.1rem;
+  width: 1px;
+  background-color: #cbd5e1;
+}
+
+:host-context(.dark) .contacto__input-prefix {
+  color: #0abde3;
+}
+
+:host-context(.dark) .contacto__input-prefix::after {
+  background-color: #243050;
+}

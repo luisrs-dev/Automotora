@@ -25,13 +25,13 @@ export class TasacionService {
   private http = inject(HttpClient);
 
   enviarSolicitud(
-    personalData: { rut: string; nombre: string; apellido: string; correo: string; celular: string },
+    personalData: { rut: string; nombre: string; correo: string; celular: string },
     vehicleData: { patente: string; anio: number; marca: string; modelo: string; version: string; kilometraje: number }
   ): Observable<any> {
     const payload: SolicitudTasacion = {
       rut: personalData.rut,
       nombre: personalData.nombre,
-      apellido: personalData.apellido,
+      apellido: '', // El nombre completo se guarda en nombre; conserva compatibilidad con Directus.
       correo: personalData.correo,
       celular: personalData.celular.startsWith('+56')
         ? personalData.celular

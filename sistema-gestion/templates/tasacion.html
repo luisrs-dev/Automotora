@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nueva solicitud de tasación</title></head>
+<body style="margin:0;padding:0;background-color:#eef2f7;color:#23324d;font-family:Arial,Helvetica,sans-serif;">
+  <div style="display:none;font-size:1px;color:#eef2f7;max-height:0;overflow:hidden;">Has recibido una nueva solicitud de Compramos tu auto de Automotora José Luis Jara.</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#eef2f7;">
+    <tr><td align="center" style="padding:32px 12px;">
+      <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;background-color:#ffffff;border:1px solid #dde5ef;border-radius:16px;overflow:hidden;">
+        <tr><td style="height:5px;background-color:#27a9e0;font-size:1px;">&nbsp;</td></tr>
+        <tr><td style="padding:32px 32px 26px;border-bottom:1px solid #e8edf4;">
+          <img src="__LOGO_URL__" width="240" alt="Automotora José Luis Jara" style="display:block;width:240px;max-width:100%;height:auto;border:0;">
+        </td></tr>
+        <tr><td style="padding:30px 32px 24px;">
+          <p style="margin:0 0 12px;font-size:11px;letter-spacing:2px;font-weight:bold;color:#247ba5;">COMPRAMOS TU AUTO</p>
+          <h1 style="margin:0 0 12px;font-size:28px;line-height:36px;color:#1e2e65;">Una nueva oportunidad<br>para tu inventario.</h1>
+          <p style="margin:0;font-size:15px;line-height:24px;color:#627089;">Recibiste una solicitud de tasación desde el sitio web. Revisa los datos del cliente y su vehículo para coordinar el siguiente paso.</p>
+        </td></tr>
+        <tr><td style="padding:0 32px 24px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f5f8fc;border:1px solid #e4ebf4;border-radius:10px;">
+            <tr><td style="padding:20px 22px 8px;font-size:11px;letter-spacing:1px;color:#627089;font-weight:bold;">DATOS DEL CLIENTE</td></tr>
+            <tr><td style="padding:0 22px 14px;font-size:20px;line-height:28px;font-weight:bold;color:#1e2e65;overflow-wrap:anywhere;">{{ $trigger.payload.nombre }} {{ $trigger.payload.apellido }}</td></tr>
+            <tr><td style="padding:0 22px 8px;font-size:14px;line-height:22px;"><span style="color:#627089;">RUT:</span> {{ $trigger.payload.rut }}</td></tr>
+            <tr><td style="padding:0 22px 8px;font-size:14px;line-height:22px;overflow-wrap:anywhere;"><span style="color:#627089;">Correo:</span> <a href="mailto:{{ $trigger.payload.correo }}" style="color:#176c9b;text-decoration:underline;">{{ $trigger.payload.correo }}</a></td></tr>
+            <tr><td style="padding:0 22px 20px;font-size:14px;line-height:22px;"><span style="color:#627089;">Teléfono:</span> <a href="tel:{{ $trigger.payload.celular }}" style="color:#176c9b;text-decoration:underline;">{{ $trigger.payload.celular }}</a></td></tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:0 32px 28px;">
+          <p style="margin:0 0 12px;font-size:11px;letter-spacing:1px;font-weight:bold;color:#627089;">DATOS DEL VEHÍCULO</p>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-top:3px solid #27a9e0;table-layout:fixed;">
+<tr><td width="120" style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#627089;font-size:14px;">Patente</td><td style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#23324d;font-size:14px;font-weight:bold;overflow-wrap:anywhere;">{{ $trigger.payload.patente }}</td></tr>
+<tr><td width="120" style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#627089;font-size:14px;">Marca</td><td style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#23324d;font-size:14px;font-weight:bold;overflow-wrap:anywhere;">{{ $trigger.payload.marca }}</td></tr>
+<tr><td width="120" style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#627089;font-size:14px;">Modelo</td><td style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#23324d;font-size:14px;font-weight:bold;overflow-wrap:anywhere;">{{ $trigger.payload.modelo }}</td></tr>
+<tr><td width="120" style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#627089;font-size:14px;">Versión</td><td style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#23324d;font-size:14px;font-weight:bold;overflow-wrap:anywhere;">{{ $trigger.payload.version }}</td></tr>
+<tr><td width="120" style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#627089;font-size:14px;">Año</td><td style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#23324d;font-size:14px;font-weight:bold;overflow-wrap:anywhere;">{{ $trigger.payload.anio }}</td></tr>
+<tr><td width="120" style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#627089;font-size:14px;">Kilometraje</td><td style="padding:10px 0;border-bottom:1px solid #e4ebf4;color:#23324d;font-size:14px;font-weight:bold;overflow-wrap:anywhere;">{{ $trigger.payload.kilometraje }} km</td></tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:0 32px 32px;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr><td bgcolor="#1e2e65" style="border-radius:7px;text-align:center;"><a href="mailto:{{ $trigger.payload.correo }}" style="display:inline-block;padding:15px 24px;color:#ffffff;font-size:14px;font-weight:bold;text-decoration:none;">Responder al cliente &rarr;</a></td></tr></table>
+          <p style="margin:14px 0 0;font-size:12px;line-height:19px;color:#738096;">También puedes usar “Responder” en tu correo para contactar al remitente.</p>
+        </td></tr>
+        <tr><td style="padding:22px 32px;background-color:#f5f8fc;border-top:1px solid #e4ebf4;">
+          <p style="margin:0 0 5px;font-size:13px;font-weight:bold;color:#1e2e65;">Automotora José Luis Jara</p>
+          <p style="margin:0;font-size:12px;line-height:20px;color:#738096;">11 Oriente 1150, Talca · Región del Maule<br>Notificación automática de Compramos tu auto.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

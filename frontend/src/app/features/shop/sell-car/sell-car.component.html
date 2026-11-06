@@ -126,35 +126,17 @@
 
             <!-- Nombre -->
             <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('nombre')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('nombre')">
-              <label class="sell-car__label" for="sell-nombre">Nombre</label>
+              <label class="sell-car__label" for="sell-nombre">Nombre completo</label>
               <div class="sell-car__input-wrapper">
                 <input
                   id="sell-nombre"
                   type="text"
                   class="sell-car__input"
                   formControlName="nombre"
-                  placeholder="Tu nombre"
-                  autocomplete="given-name"
+                  placeholder="Tu nombre completo"
+                  autocomplete="name"
                 />
                 @if (isPersonalFieldValid('nombre')) {
-                  <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                }
-              </div>
-            </div>
-
-            <!-- Apellido -->
-            <div class="sell-car__field" [class.sell-car__field--valid]="isPersonalFieldValid('apellido')" [class.sell-car__field--invalid]="isPersonalFieldInvalid('apellido')">
-              <label class="sell-car__label" for="sell-apellido">Apellido</label>
-              <div class="sell-car__input-wrapper">
-                <input
-                  id="sell-apellido"
-                  type="text"
-                  class="sell-car__input"
-                  formControlName="apellido"
-                  placeholder="Tu apellido"
-                  autocomplete="family-name"
-                />
-                @if (isPersonalFieldValid('apellido')) {
                   <svg class="sell-car__check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                 }
               </div>

@@ -138,6 +138,48 @@ Para enviar notificaciones cuando un usuario completa el formulario **"Compramos
    - Body: Plantilla de correo en HTML accediendo a `{{ $trigger.payload.campo }}`.
 5. Cambia el estado del Flujo a **Active** y guarda.
 
+### D. Formulario de contacto
+
+El formulario de contacto envía `nombre`, `correo`, `celular`, `asunto` y
+`mensaje` a `/items/mensaje_contacto`. Esta colección y su flujo deben existir
+en Directus; desplegar solamente Angular no los crea.
+
+Para configurar el backend, con las credenciales administrativas de
+`sistema-gestion/.env`, ejecuta:
+
+```bash
+python3 sistema-gestion/scripts/configure-contact.py
+```
+
+Puedes definir `DIRECTUS_URL` para otro servidor. El script crea la colección,
+permite al público únicamente crear mensajes y configura una notificación al
+mismo destinatario del flujo de tasaciones activo. En la primera ejecución
+comprueba el envío anónimo y elimina su mensaje de prueba antes de activar el
+correo. Verifica también que los mensajes no se puedan consultar públicamente.
+Las ejecuciones posteriores conservan el flujo existente. La recepción final
+del correo debe comprobarse en la bandeja del destinatario.
+
+La plantilla visual del correo está en `sistema-gestion/templates/contacto.html`.
+Para aplicarla o actualizarla en Directus:
+
+```bash
+python3 sistema-gestion/scripts/update-contact-template.py
+```
+
+Este script publica el logo para los clientes de correo, conserva el destinatario
+existente y configura `Reply-To` con el correo del cliente. No envía correos de
+prueba ni modifica la notificación de tasaciones.
+
+Para aplicar el mismo diseño al correo de **Compramos tu auto**, usa la plantilla
+`sistema-gestion/templates/tasacion.html` con:
+
+```bash
+python3 sistema-gestion/scripts/update-contact-template.py --form tasacion
+```
+
+Esta opción actualiza únicamente el correo de tasaciones, conservando su asunto
+y destinatario actuales, e incluye los datos del cliente y del vehículo.
+
 ---
 
 ## 💻 2. Configuración del Frontend (Angular 19)

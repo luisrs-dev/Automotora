@@ -33,27 +33,19 @@ export class ContactoComponent {
     this.contactForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       correo: ['', [Validators.required, Validators.email]],
-      celular: ['', [Validators.required, Validators.minLength(9)]],
+      celular: ['', [Validators.required, Validators.pattern(/^\d{4}\s?\d{4}$/)]],
       asunto: ['', [Validators.required]],
       mensaje: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
     });
   }
 
-  /** Format phone as user types: +56 9 XXXX XXXX */
+  /** Format the eight digits after the fixed +56 9 prefix. */
   formatPhone(event: Event): void {
     const input = event.target as HTMLInputElement;
-    let value = input.value.replace(/[^0-9+]/g, '');
-
-    if (value && !value.startsWith('+')) {
-      if (value.startsWith('56')) {
-        value = '+' + value;
-      } else if (value.startsWith('9')) {
-        value = '+56 ' + value;
-      }
-    }
-
-    input.value = value;
-    this.contactForm.get('celular')?.setValue(value, { emitEvent: false });
+    const digits = input.value.replace(/\D/g, '').slice(0, 8);
+    const formatted = digits.length > 4 ? `${digits.slice(0, 4)} ${digits.slice(4)}` : digits;
+    input.value = formatted;
+    this.contactForm.get('celular')?.setValue(formatted, { emitEvent: false });
   }
 
   isFieldValid(field: string): boolean {
